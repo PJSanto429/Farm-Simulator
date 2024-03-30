@@ -13,7 +13,7 @@ export class Farm {
         height: number = 100
     ) {
         this.name = name
-        this.owner = owner,
+        this.owner = owner
 
         this.width = width
         this.height = height

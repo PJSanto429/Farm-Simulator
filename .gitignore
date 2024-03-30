@@ -24,3 +24,4 @@ yarn-error.log*
 
 src/classes/test.xls
 src/classes/Testbed.ts
+src/classes/Helpers.ts
