@@ -1,13 +1,69 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    background-color: black;
+    color: green;
+    font-size: 24px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+div {
+    padding: 5px 0px 5px 0px;
+    margin: 10px 0px;
+}
+
+button {
+    margin: 5px;
+    padding: 3px;
+}
+
+input {
+    margin: 2px;
+    margin-left: 10px;
+    padding: 3px;
+}
+
+button {
+    padding: 15px;
+    background-color: rgb(0, 115, 181);
+    color: black;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 549;
+}
+button:hover {
+    background-color: rgb(62, 62, 221);
+    color: black;
+}
+button:disabled {
+    background-color: darkgray;
+    color: rgb(111, 111, 111)
+}
+
+.main {
+    text-align: center;
+    height: 100%;
+}
+.header {
+    margin-top: -15px;
+    font-size: 35px;
+    text-decoration: green underline 2px;
+}
+
+.options {
+    height: 485px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.option {
+    width: 45%;
+    max-height: 90%;
+    overflow-y: scroll;
+    padding: 15px;
+    text-align: left;
+}
+.leftOptions {
+    outline: 2px solid red;
+}
+.rightOptions {
+    outline: 2px solid blue;
 }
