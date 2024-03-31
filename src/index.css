@@ -58,6 +58,9 @@ input {
     font-weight: 549;
     margin-bottom: 10px;
 }
+label {
+    margin-right: 10px;
+}
 
 .main {
     text-align: center;
