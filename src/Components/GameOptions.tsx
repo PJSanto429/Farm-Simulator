@@ -1,7 +1,8 @@
 import React from 'react'
 import { Game } from '../classes/Game'
+import { Stats } from './Sides/Stats/Stats'
+import { Options } from './Sides/Stats/Options/Options'
 import "../index.css"
-import { Stats } from './Sides/Stats'
 
 export const GameOptions = (props: {
     game: Game
@@ -17,7 +18,7 @@ export const GameOptions = (props: {
                     <Stats game={game} />
                 </div>
                 <div className='rightOptions option'>
-                    right
+                    <Options game={game} />
                 </div>
             </div>
         </>

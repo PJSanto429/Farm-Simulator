@@ -12,7 +12,7 @@ export const NewGameOptions = (props: {
     const [playerName, setPlayerName] = useState("")
 
     const handleCreateNewGame = useCallback(() => {
-        const game = new Game(farmName, playerName)
+        const game = new Game(farmName, playerName, 0, 0, 0, 1000, 0)
         onNewGameCreated(game)
     }, [farmName, playerName, onNewGameCreated])
 

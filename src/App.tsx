@@ -5,7 +5,6 @@ import { MainOptions } from './Components/MainOptions'
 import { Game } from './classes/Game'
 import { NewGameOptions } from './Components/NewGameOptions'
 import './index.css'
-import { Header } from './Components/Header'
 
 export const App = () => {
     const [text, setText] = useState('')
@@ -45,7 +44,7 @@ export const App = () => {
         setShowNewGameOptions(false)
         // setCurrentGame(newGame)
         localStorage.setItem("game", JSON.stringify(newGame))
-        navigate("game")
+        navigate("/game")
     }
 
     const handleLoadGame = () => {

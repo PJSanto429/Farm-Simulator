@@ -1,5 +1,6 @@
 import React from 'react'
-import { Game } from '../../classes/Game'
+import { Game } from '../../../classes/Game'
+import './index.css'
 
 export const Stats = (props: {
     game: Game
@@ -12,11 +13,17 @@ export const Stats = (props: {
     return (
         <>
             <div className="statsMain">
-                <div className="animalStats">
+                <div className="animalStats option">
                     Chickens: {game.chickens.length}
+                    <br />
+                    Cows: 0
                 </div>
 
-                <div className="resourceStats"></div>
+                <div className="resourceStats option">
+                    Money: ${game.money}
+                    <br />
+                    Seeds: {game.seeds.amount}
+                </div>
             </div>
         </>
     )

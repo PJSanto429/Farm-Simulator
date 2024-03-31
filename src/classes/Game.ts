@@ -8,6 +8,7 @@ import { Chicken } from './Animals/Chicken'
 export class Game {
     farmName: string
     playerName: string // ! will be Player type eventually
+    money: number
 
     moveNumber: number = 0
 
@@ -26,6 +27,9 @@ export class Game {
         startingEggs: number = 0,
 
         startingChickens: number = 0,
+
+        startingMoney: number = 0,
+        startingMoves: number = 0
     ) {
         this.farmName = farmName
         this.playerName = playerName
@@ -36,6 +40,9 @@ export class Game {
         for (let i = startingChickens; i > 0; i--) {
             this.chickens.push(new Chicken())
         }
+
+        this.money = startingMoney
+        this.moveNumber = startingMoves
     }
     
     // 
@@ -52,7 +59,9 @@ export const getGameFromString = (
         gameString.playerName,
         gameString.seeds.amount,
         gameString.eggs.amount,
-        gameString.chickens.length
+        gameString.chickens.length,
+        gameString.money,
+        gameString.moveNumber
     )
 
     return toReturn
