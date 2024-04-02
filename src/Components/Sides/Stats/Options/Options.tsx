@@ -4,20 +4,21 @@ import { BuyAnimals } from './BuyAnimals'
 
 export const Options = (props: {
     game: Game
+    handleBuyAnimal: (animal: string, amount: number) => void
 }) => {
     const {
-        game
+        game,
+        handleBuyAnimal
     } = props
 
     const [showBuyAnimals, setShowBuyAnimals] = useState(true)
     
-    const handleBuyAnimals = (
+    const handleBuyAnimalsController = (
         animalToBuy: string,
         amount: number
     ) => {
-        console.clear()
-        console.log("animal ==> ", animalToBuy)
-        console.log("amount ==> ", amount)
+        handleBuyAnimal(animalToBuy, amount)
+        setShowBuyAnimals(false)
     }
 
     return (
@@ -25,7 +26,7 @@ export const Options = (props: {
             <BuyAnimals
                 showBuyAnimals={showBuyAnimals}
                 setShowBuyAnimals={setShowBuyAnimals}
-                handleBuyAnimals={handleBuyAnimals}
+                handleBuyAnimals={handleBuyAnimalsController}
             />
         </>
     )

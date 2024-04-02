@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Game, getGameFromString } from '../classes/Game'
 import "../index.css"
@@ -10,14 +10,22 @@ export const MainGame = () => {
     const [game, setGame] = useState<Game>()
 
     useEffect(() => {
-        const gottenGame: Game = JSON.parse(localStorage.getItem("game") || "")
-
-        if (JSON.stringify(gottenGame) === "") {
+        try {
+            const gottenGame: Game = JSON.parse(localStorage.getItem("game") || "")
+    
+            if (JSON.stringify(gottenGame) === "") {
+                navigate("/home")
+            }
+            const gameToSet = getGameFromString(gottenGame)
+            setGame(gameToSet)
+        } catch (error) {
             navigate("/home")
         }
-        const gameToSet = getGameFromString(gottenGame)
-        setGame(gameToSet)
     }, [navigate])
+
+    useEffect(() => {
+        console.log(game)
+    }, [game])
 
     if (game === undefined) {
         return <>loading...</>
@@ -29,7 +37,7 @@ export const MainGame = () => {
                 <div className="header">
                     {game.playerName}'s "{game.farmName}"
                 </div>
-                <GameOptions game={game} />
+                <GameOptions game={game} setGame={(gameToBe) => setGame(gameToBe)} /> <br />
             </div>
         </>
     )

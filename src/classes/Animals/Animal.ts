@@ -8,11 +8,13 @@ export abstract class Animal {
     name: String
     requiredSpace: number
 
-    protected food: string
+    food: string
     foodPerDay: number
 
     output: string
     outputPerDay: number
+
+    amount: number
 
     constructor(
         name: String,
@@ -26,6 +28,8 @@ export abstract class Animal {
 
         output: string,
         outputPerDay: number,
+
+        amount: number
     ) {
         this.name = name
         this.weight = weight
@@ -38,6 +42,12 @@ export abstract class Animal {
 
         this.output = output
         this.outputPerDay = outputPerDay
+
+        this.amount = amount
+    }
+
+    addAmount(amountToAdd: number) {
+        this.amount += amountToAdd
     }
 
     getFood(allResources: Resource[]): Resource | undefined {
@@ -59,4 +69,10 @@ export abstract class Animal {
         return undefined
     }
 
+}
+
+export class NoneAnimal extends Animal {
+    constructor() {
+        super("", 0, 0, 0, 0, "", 0, "", 0, 0)
+    }
 }

@@ -4,6 +4,7 @@ import { Egg } from './Resources/Egg'
 
 //! animal imports
 import { Chicken } from './Animals/Chicken'
+import { Animal, NoneAnimal } from './Animals/Animal'
 
 export class Game {
     farmName: string
@@ -17,7 +18,8 @@ export class Game {
     eggs: Egg
 
     //! animals
-    chickens: Chicken[] = []
+    noneAnimal: Animal = new NoneAnimal()
+    chickens: Chicken
 
     constructor(
         farmName: string,
@@ -37,29 +39,47 @@ export class Game {
         this.seeds = new Seed(startingSeeds)
         this.eggs = new Egg(startingEggs)
 
-        for (let i = startingChickens; i > 0; i--) {
-            this.chickens.push(new Chicken())
-        }
+        this.chickens = new Chicken("Seed", "Egg", startingChickens)
 
         this.money = startingMoney
         this.moveNumber = startingMoves
     }
-    
-    // 
+
+    addMoney(money: number) {
+        this.money += money
+    }
+
+    addAnimal(animal: Animal, amount: number) {
+        console.log(animal.name)
+        switch (animal.name) {
+            case ("Chicken"):
+                console.log("amount ==> ", amount)
+                this.chickens = new Chicken("Seed", "Egg", this.chickens.amount + amount)
+                break
+        }
+    }
+
+    getAnimalByName(name: string): Animal {
+        switch (name) {
+            case ("chicken"):
+                return this.chickens
+            default:
+                return this.noneAnimal
+        }
+
+    }
 }
 
 export const getGameFromString = (
     gameString: Game
 ): Game => {
 
-    console.log(gameString)
-    
     const toReturn = new Game(
         gameString.farmName,
         gameString.playerName,
         gameString.seeds.amount,
         gameString.eggs.amount,
-        gameString.chickens.length,
+        gameString.chickens.amount,
         gameString.money,
         gameString.moveNumber
     )

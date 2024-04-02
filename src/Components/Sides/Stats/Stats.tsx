@@ -12,9 +12,10 @@ export const Stats = (props: {
     //! on the left show animal stats, on the right show resource stats
     return (
         <>
+            {/* {JSON.stringify(game)} */}
             <div className="statsMain">
                 <div className="animalStats option">
-                    Chickens: {game.chickens.length}
+                    Chickens: {game.chickens.amount}
                     <br />
                     Cows: 0
                 </div>

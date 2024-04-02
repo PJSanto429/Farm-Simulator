@@ -65,7 +65,6 @@ export const BuyAnimals = (props: {
                         }
                     }
                 />
-
                 <br />
                 <Confirm />
             </>

@@ -1,35 +1,24 @@
 import * as readline from 'readline'
+import { Game, getGameFromString } from './Game'
 
-export const print = (
-    text: string = "",
-    delay: number = 45
-) => {
-    // let index = 0
-    // const intervalId = setInterval(() => {
-    //     process.stdout.write(text[index])
-    //     index++
-    //     if (index == text.length) {
-    //         clearInterval(intervalId)
-    //         process.stdout.write('\n')
-    //     }
-    // }, delay)
-    console.log(text)
+export const saveGame = async (game: Game) => {
+    try {
+        // 
+    } catch (err) {
+        return
+    }
+    return true
 }
 
-export const getInput = (
-    question: string
-): Promise<string> => {
-
-    let toReturn: string = ''
-
-    const reader = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    })
-
-    return new Promise<string>((resolve, reject) => {
-        reader.question(question, (input: string) => {
-            resolve(input)
-        })
-    })
+export const loadGame = async(): Promise<Game | undefined> => {
+    try {
+        const res = await fetch("../saveGame.json")
+        if (!res.ok) {
+            throw new Error("Failed to fetch data")
+        }
+        const data = await res.json()
+        return getGameFromString(data)
+    } catch (err) {
+        return
+    }
 }
