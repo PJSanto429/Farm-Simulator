@@ -16,6 +16,7 @@ export const BuyAnimals = (props: {
 
     const [showConfirm, setShowConfirm] = useState(false)
 
+    // TODO selling animals should sell for 75% of their buying price
     const buyAnimals = useCallback(() => {
         if (animalToBuy !== undefined) {
             handleBuyAnimals(animalToBuy, amount)

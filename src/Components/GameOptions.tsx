@@ -37,18 +37,20 @@ export const GameOptions = (props: {
         }
 
         game.addMoney(-toSpend)
+        game.farmName = "bruh time"
         game.addAnimal(animal, amount)
 
-        console.log(game)
+        // console.log(game)
         handleSaveGame(game)
         setGame(game)
     }
 
+    useEffect(() => {
+        console.log("updated game ==> ", game)
+    }, [game])
+
     return (
         <>
-            <button onClick={() => handleSaveGame()}>
-                Save
-            </button>
             <div className='options'>
                 <div className='leftOptions option'>
                     <Stats game={game} />

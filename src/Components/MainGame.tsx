@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Game, getGameFromString } from '../classes/Game'
 import "../index.css"
@@ -23,8 +23,11 @@ export const MainGame = () => {
         }
     }, [navigate])
 
-    useEffect(() => {
-        console.log(game)
+    const handleUpdateGame = useCallback((gameToBe: Game) => {
+        if (game !== undefined) {
+            setGame(gameToBe)
+            window.location.reload()
+        }
     }, [game])
 
     if (game === undefined) {
@@ -37,7 +40,7 @@ export const MainGame = () => {
                 <div className="header">
                     {game.playerName}'s "{game.farmName}"
                 </div>
-                <GameOptions game={game} setGame={(gameToBe) => setGame(gameToBe)} /> <br />
+                <GameOptions game={game} setGame={handleUpdateGame} /> <br />
             </div>
         </>
     )

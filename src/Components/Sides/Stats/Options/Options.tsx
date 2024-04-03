@@ -11,7 +11,7 @@ export const Options = (props: {
         handleBuyAnimal
     } = props
 
-    const [showBuyAnimals, setShowBuyAnimals] = useState(true)
+    const [showBuyAnimals, setShowBuyAnimals] = useState(false)
     
     const handleBuyAnimalsController = (
         animalToBuy: string,
