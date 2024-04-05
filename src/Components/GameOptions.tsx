@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react'
 import { Game } from '../classes/Game'
 import { Stats } from './Sides/Stats/Stats'
 import { Options } from './Sides/Stats/Options/Options'
-import "../index.css"
 
 export const GameOptions = (props: {
     game: Game
@@ -45,9 +44,9 @@ export const GameOptions = (props: {
         setGame(game)
     }
 
-    useEffect(() => {
-        console.log("updated game ==> ", game)
-    }, [game])
+    // useEffect(() => {
+    //     console.log("updated game ==> ", game)
+    // }, [game])
 
     return (
         <>
@@ -56,6 +55,9 @@ export const GameOptions = (props: {
                     <Stats game={game} />
                 </div>
                 <div className='rightOptions option'>
+                    <div className="optionsHeader">
+                        Options
+                    </div>
                     <Options
                         game={game}
                         handleBuyAnimal={handleBuyAnimal}

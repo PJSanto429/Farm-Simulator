@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { MainOptions } from './Components/MainOptions'
 import { Game } from './classes/Game'
 import { NewGameOptions } from './Components/NewGameOptions'
+import './scrollbar.css'
 import './index.css'
 
 export const App = () => {

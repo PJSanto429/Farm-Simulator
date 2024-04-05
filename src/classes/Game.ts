@@ -5,6 +5,7 @@ import { Egg } from './Resources/Egg'
 //! animal imports
 import { Chicken } from './Animals/Chicken'
 import { Animal, NoneAnimal } from './Animals/Animal'
+import { Cow } from './Animals/Cow'
 
 export class Game {
     farmName: string
@@ -12,6 +13,7 @@ export class Game {
     money: number
 
     moveNumber: number = 0
+    day: number
 
     //! resources
     seeds: Seed
@@ -20,6 +22,7 @@ export class Game {
     //! animals
     noneAnimal: Animal = new NoneAnimal()
     chickens: Chicken
+    cows: Cow
 
     constructor(
         farmName: string,
@@ -29,9 +32,12 @@ export class Game {
         startingEggs: number = 0,
 
         startingChickens: number = 0,
+        startingCows: number = 0,
 
         startingMoney: number = 0,
-        startingMoves: number = 0
+        startingMoves: number = 0,
+
+        day: number = 0
     ) {
         this.farmName = farmName
         this.playerName = playerName
@@ -39,10 +45,13 @@ export class Game {
         this.seeds = new Seed(startingSeeds)
         this.eggs = new Egg(startingEggs)
 
-        this.chickens = new Chicken("Seed", "Egg", startingChickens)
+        this.chickens = new Chicken(startingChickens)
+        this.cows = new Cow(startingCows)
 
         this.money = startingMoney
         this.moveNumber = startingMoves
+
+        this.day = day
     }
 
     addMoney(money: number) {
@@ -53,9 +62,10 @@ export class Game {
         console.log(animal.name)
         switch (animal.name) {
             case ("Chicken"):
-                console.log("amount ==> ", amount)
-                this.chickens = new Chicken("Seed", "Egg", this.chickens.amount + amount)
+                this.chickens = new Chicken(this.chickens.amount + amount)
                 break
+            case ("Cow"):
+                this.cows = new Cow(this.cows.amount + amount)
         }
     }
 
@@ -63,6 +73,8 @@ export class Game {
         switch (name) {
             case ("chicken"):
                 return this.chickens
+            case ("cow"):
+                return this.cows
             default:
                 return this.noneAnimal
         }

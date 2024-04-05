@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Game, getGameFromString } from '../classes/Game'
-import "../index.css"
 import { GameOptions } from './GameOptions'
 
 export const MainGame = () => {
@@ -40,6 +39,7 @@ export const MainGame = () => {
                 <div className="header">
                     {game.playerName}'s "{game.farmName}"
                 </div>
+                {/*  */}
                 <GameOptions game={game} setGame={handleUpdateGame} /> <br />
             </div>
         </>

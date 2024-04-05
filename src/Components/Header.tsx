@@ -10,9 +10,7 @@ export const Header = (props: {
 
     return (
         <div className="headerMain">
-            {/* <div>{currentGame?.farmName || "No Farm Yet"}</div> */}
-            <div>{!!currentGame?.farmName ? "" : ""}</div>
-            <div>{currentGame?.playerName || "No Player"}</div>
+            {/*  */}
         </div>
     )
 }

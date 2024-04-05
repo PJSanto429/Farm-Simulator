@@ -7,7 +7,7 @@ export const Options = (props: {
     handleBuyAnimal: (animal: string, amount: number) => void
 }) => {
     const {
-        game,
+        // game,
         handleBuyAnimal
     } = props
 
@@ -23,6 +23,8 @@ export const Options = (props: {
 
     return (
         <>
+            {/* // TODO selling animals should sell for 75% of their buying price */}
+            <></>
             <BuyAnimals
                 showBuyAnimals={showBuyAnimals}
                 setShowBuyAnimals={setShowBuyAnimals}

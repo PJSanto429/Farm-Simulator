@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react'
 
 export const BuyAnimals = (props: {
-    showBuyAnimals: boolean,
-    setShowBuyAnimals: (show: boolean) => void,
+    showBuyAnimals: boolean
+    setShowBuyAnimals: (show: boolean) => void
     handleBuyAnimals: (animal: string, amount: number) => void
 }) => {
     const {
@@ -16,31 +16,53 @@ export const BuyAnimals = (props: {
 
     const [showConfirm, setShowConfirm] = useState(false)
 
-    // TODO selling animals should sell for 75% of their buying price
     const buyAnimals = useCallback(() => {
+        handleReset()
         if (animalToBuy !== undefined) {
+            setShowConfirm(false)   
             handleBuyAnimals(animalToBuy, amount)
         }
     }, [animalToBuy, amount, handleBuyAnimals])
 
-    const Confirm = useCallback(() => {
-        if (!showConfirm) {
-            return (
+    const handleReset = () => {
+        setShowConfirm(false)
+        setAnimalToBuy("")
+        setAmount(0)
+    }
+
+    const Confirm = useCallback(() => (
+        <>
+            <button
+                className="secondary"
+                onClick={() => {
+                    handleReset()
+                    setShowBuyAnimals(false)
+                    setShowConfirm(false)
+                }}
+            >
+                Cancel
+            </button>
+            {!showConfirm &&
                 <button
-                    onClick={() => {
-                        setShowConfirm(true)
-                    }}
+                    disabled={!amount || !animalToBuy}
+                    onClick={() => {setShowConfirm(true)}}
                 >
                     Buy
                 </button>
-            )
-        }
-        return (
-            <button onClick={() => {buyAnimals()}}>
-                Press again to confirm
-            </button>
-        )
-    }, [showConfirm, buyAnimals])
+            }
+            {showConfirm &&
+                <button onClick={() => {buyAnimals()}}>
+                    Press again to confirm
+                </button>
+            }
+        </>
+    ), [
+        showConfirm,
+        buyAnimals,
+        setShowBuyAnimals,
+        amount,
+        animalToBuy
+    ])
 
     if (showBuyAnimals) {
         return (
@@ -49,9 +71,7 @@ export const BuyAnimals = (props: {
                 <select onChange={(e) => {setAnimalToBuy(e.target.value)}} name='animal'>
                     <option value=''>Select...</option>
                     <option value="chicken">Chicken</option>
-                    <option value="chicken">Cow</option>
-                    <option value="chicken">Cat</option>
-                    <option value="chicken">Dog</option>
+                    <option value="cow">Cow</option>
                 </select>
 
                 <label htmlFor='amount'>Amount:</label>
@@ -73,11 +93,13 @@ export const BuyAnimals = (props: {
     }
 
     return (
-        <button
-            onClick={() => setShowBuyAnimals(true)}
-            disabled={showBuyAnimals}
-        >
-            Buy Animals
-        </button>
+        <div>
+            <button
+                onClick={() => setShowBuyAnimals(true)}
+                disabled={showBuyAnimals}
+            >
+                Buy Animals
+            </button>
+        </div>
     )
 }
