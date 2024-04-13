@@ -7,7 +7,7 @@ export const Options = (props: {
     handleBuyAnimal: (animal: string, amount: number) => void
 }) => {
     const {
-        game,
+        // game,
         handleBuyAnimal
     } = props
 

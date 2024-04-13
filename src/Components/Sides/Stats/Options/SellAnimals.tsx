@@ -7,7 +7,7 @@ export const SellAnimals = (props: {
     const {
         showSellAnimals,
         setShowSellAnimals,
-        handleSellAnimals
+        // handleSellAnimals
     } = props
 
     return (
