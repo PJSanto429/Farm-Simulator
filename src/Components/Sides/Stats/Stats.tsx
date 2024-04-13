@@ -1,29 +1,34 @@
-import React from 'react'
-import { Game } from '../../../classes/Game'
+import { GameType } from '../../../classes/Game'
 import './index.css'
 
 export const Stats = (props: {
-    game: Game
+    game: GameType
 }) => {
     const {
         game
     } = props
     
-    //! on the left show animal stats, on the right show resource stats
+    const chickenAmt = game.animals.find((a) => a.name === "Chicken")?.amount || 0
+    const cowAmt = game.animals.find((a) => a.name === "Cow")?.amount || 0
+
+    const seedsAmt = game.resources.find((r) => r.name === "Seeds")?.amount || 0
+    
     return (
         <>
-            {/* {JSON.stringify(game)} */}
+            <div className="optionsHeader">
+                Stats
+            </div>
             <div className="statsMain">
                 <div className="animalStats option">
-                    Chickens: {game.chickens.amount}
+                    Chickens: {chickenAmt}
                     <br />
-                    Cows: 0
+                    Cows: {cowAmt}
                 </div>
 
                 <div className="resourceStats option">
                     Money: ${game.money}
                     <br />
-                    Seeds: {game.seeds.amount}
+                    Seeds: {seedsAmt}
                 </div>
             </div>
         </>

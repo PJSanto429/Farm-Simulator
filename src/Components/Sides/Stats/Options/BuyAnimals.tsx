@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export const BuyAnimals = (props: {
     showBuyAnimals: boolean
@@ -18,7 +18,7 @@ export const BuyAnimals = (props: {
 
     const buyAnimals = useCallback(() => {
         handleReset()
-        if (animalToBuy !== undefined) {
+        if (animalToBuy !== undefined && amount > 0) {
             setShowConfirm(false)   
             handleBuyAnimals(animalToBuy, amount)
         }
@@ -70,8 +70,8 @@ export const BuyAnimals = (props: {
                 <label htmlFor='animal'>Animal:</label>
                 <select onChange={(e) => {setAnimalToBuy(e.target.value)}} name='animal'>
                     <option value=''>Select...</option>
-                    <option value="chicken">Chicken</option>
-                    <option value="cow">Cow</option>
+                    <option value="Chicken">Chicken</option>
+                    <option value="Cow">Cow</option>
                 </select>
 
                 <label htmlFor='amount'>Amount:</label>

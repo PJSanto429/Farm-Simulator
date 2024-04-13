@@ -1,4 +1,3 @@
-import React from 'react'
 
 export const MainOptions = (props: {
     handleStartNewGame: () => void
@@ -21,12 +20,12 @@ export const MainOptions = (props: {
                             handleLoadGame()
                             setShow(false)
                         }}
-                        disabled
                     >
-                        Load Game
+                        Find Game
                     </button>
 
                     <button
+                        className="secondary"
                         onClick={() => {
                             handleStartNewGame()
                             setShow(false)

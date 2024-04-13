@@ -1,16 +1,19 @@
-import React from 'react'
-import { Game } from '../classes/Game'
+import { GameType } from '../classes/Game'
+import { Time } from './Time'
 
 export const Header = (props: {
-    currentGame?: Game
+    currentGame: GameType
+    handleChangeDay: () => void
 }) => {
     const {
-        currentGame
+        currentGame,
+        handleChangeDay
     } = props
 
     return (
         <div className="headerMain">
-            {/*  */}
+            Day {Math.floor(currentGame.day)}
+            <Time handleChangeDay={handleChangeDay} day={currentGame.day} />
         </div>
     )
 }

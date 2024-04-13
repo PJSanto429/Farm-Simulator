@@ -1,25 +1,18 @@
-import React, { useCallback, useEffect } from 'react'
-import { Game } from '../classes/Game'
+import { GameHelper, GameType } from '../classes/Game'
 import { Stats } from './Sides/Stats/Stats'
 import { Options } from './Sides/Stats/Options/Options'
 
 export const GameOptions = (props: {
-    game: Game
-    setGame: (game: Game) => void
-    // handleBuyAnimal: (animal: string, amount: number) => void
+    game: GameType
+    setGame: (game: GameType) => void
+    handleSaveGame: (altGame: GameType | undefined) => void
 }) => {
     const {
         game,
         setGame,
-        // handleBuyAnimal
+        handleSaveGame
     } = props
-
-
-    const handleSaveGame = useCallback((
-        gameToSave: Game | undefined = undefined
-    ) => {
-        localStorage.setItem("game", JSON.stringify(gameToSave || game))
-    }, [game])
+    const helper = new GameHelper()
     
     const handleBuyAnimal = (
         animalToBuy: string,
@@ -29,24 +22,33 @@ export const GameOptions = (props: {
             return
         }
 
-        const animal = game.getAnimalByName(animalToBuy) 
-        const toSpend = animal.price * amount
-        if (toSpend > game.money) {
+        const animal = helper.getAnimalByName(animalToBuy, game.animals)
+        if (animal === null) {
             return
         }
 
-        game.addMoney(-toSpend)
-        game.farmName = "bruh time"
-        game.addAnimal(animal, amount)
+        const toSpend = animal.price * amount
+        if (toSpend > game.money) {
+            console.log("not enough money - 3")
+            return
+        }
 
-        // console.log(game)
-        handleSaveGame(game)
-        setGame(game)
+        const gameToBe = {
+            ...game,
+            money: game.money - toSpend,
+            animals: game.animals.map((addingAnimal) => {
+                if (addingAnimal.name !== animal.name) {
+                    return addingAnimal
+                }
+                return {
+                    ...addingAnimal,
+                    amount: addingAnimal.amount + amount
+                }
+            })
+        }
+        setGame(gameToBe)
+        handleSaveGame(gameToBe)
     }
-
-    // useEffect(() => {
-    //     console.log("updated game ==> ", game)
-    // }, [game])
 
     return (
         <>

@@ -1,13 +1,13 @@
-import React, { useCallback, useState } from 'react'
-import { Game } from '../../../../classes/Game'
+import { useState } from 'react'
+import { GameType } from '../../../../classes/Game'
 import { BuyAnimals } from './BuyAnimals'
 
 export const Options = (props: {
-    game: Game
+    game: GameType
     handleBuyAnimal: (animal: string, amount: number) => void
 }) => {
     const {
-        // game,
+        game,
         handleBuyAnimal
     } = props
 

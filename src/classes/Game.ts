@@ -1,100 +1,125 @@
-//! resource imports
-import { Seed } from './Resources/Seed'
-import { Egg } from './Resources/Egg'
+import { AnimalType } from './Animals/Animal'
+import { ResourceType } from './Resources/Resource'
 
-//! animal imports
-import { Chicken } from './Animals/Chicken'
-import { Animal, NoneAnimal } from './Animals/Animal'
-import { Cow } from './Animals/Cow'
-
-export class Game {
-    farmName: string
-    playerName: string // ! will be Player type eventually
-    money: number
-
-    moveNumber: number = 0
-    day: number
-
-    //! resources
-    seeds: Seed
-    eggs: Egg
-
-    //! animals
-    noneAnimal: Animal = new NoneAnimal()
-    chickens: Chicken
-    cows: Cow
-
-    constructor(
-        farmName: string,
-        playerName: string,
-
-        startingSeeds: number = 0,
-        startingEggs: number = 0,
-
-        startingChickens: number = 0,
-        startingCows: number = 0,
-
-        startingMoney: number = 0,
-        startingMoves: number = 0,
-
-        day: number = 0
-    ) {
-        this.farmName = farmName
-        this.playerName = playerName
-
-        this.seeds = new Seed(startingSeeds)
-        this.eggs = new Egg(startingEggs)
-
-        this.chickens = new Chicken(startingChickens)
-        this.cows = new Cow(startingCows)
-
-        this.money = startingMoney
-        this.moveNumber = startingMoves
-
-        this.day = day
-    }
-
-    addMoney(money: number) {
-        this.money += money
-    }
-
-    addAnimal(animal: Animal, amount: number) {
-        console.log(animal.name)
-        switch (animal.name) {
-            case ("Chicken"):
-                this.chickens = new Chicken(this.chickens.amount + amount)
-                break
-            case ("Cow"):
-                this.cows = new Cow(this.cows.amount + amount)
+export class GameHelper {
+    getAnimalByName(
+        nameToFind: String, animals: AnimalType[]
+    ): AnimalType | null {
+        for (var animal of animals) {
+            if (animal.name === nameToFind) {
+                return animal
+            }
         }
+        return null
     }
+}
 
-    getAnimalByName(name: string): Animal {
-        switch (name) {
-            case ("chicken"):
-                return this.chickens
-            case ("cow"):
-                return this.cows
-            default:
-                return this.noneAnimal
-        }
-
+export const getGameToSave = (game: GameType): GameCreateType => {
+    return {
+        farmName: game.farmName,
+        playerName: game.playerName,
+        money: game.money,
+        moveNumber: game.moveNumber,
+        day: game.day,
+        seedAmt: game.resources.find((r) => r.name === "Seed")?.amount || 0,
+        wheatAmt: game.resources.find((r) => r.name === "Wheat")?.amount || 0,
+        eggAmt: game.resources.find((r) => r.name === "Egg")?.amount || 0,
+        milkAmt: game.resources.find((r) => r.name === "Milk")?.amount || 0,
+        chickenAmt: game.animals.find((r) => r.name === "Chicken")?.amount || 0,
+        cowAmt: game.animals.find((r) => r.name === "Cow")?.amount || 0
     }
 }
 
 export const getGameFromString = (
-    gameString: Game
-): Game => {
-
-    const toReturn = new Game(
-        gameString.farmName,
-        gameString.playerName,
-        gameString.seeds.amount,
-        gameString.eggs.amount,
-        gameString.chickens.amount,
-        gameString.money,
-        gameString.moveNumber
-    )
+    gameString: GameCreateType
+): GameType => {
+    const toReturn: GameType = {
+        farmName: gameString.farmName,
+        playerName: gameString.playerName,
+        resources: [
+            {
+                name: "Seed",
+                weight: 0.1,
+                amount: gameString.seedAmt
+            },
+            {
+                name: "Egg",
+                weight: .3,
+                amount: gameString.eggAmt
+            },
+            {
+                name: "Wheat",
+                weight: .2,
+                amount: gameString.wheatAmt
+            },
+            {
+                name: "Milk",
+                weight: .8,
+                amount: gameString.milkAmt
+            },
+        ],
+        animals: [
+            {
+                name: "Chicken",
+                weight: 6,
+                price: 5,
+                lifespan: 5,
+                requiredSpace: 5,
+                food: "Seed",
+                foodPerDay: 10,
+                output: "Egg",
+                outputPerDay: 1,
+                amount: gameString.chickenAmt
+            },
+            {
+                name: "Cow",
+                weight: 1100,
+                price: 500,
+                lifespan: 15,
+                requiredSpace: 30,
+                food: "Wheat",
+                foodPerDay: 25,
+                output: "Milk",
+                outputPerDay: 7,
+                amount: gameString.cowAmt
+            }
+        ],
+        money: gameString.money,
+        moveNumber: gameString.moveNumber,
+        day: gameString.day
+    }
 
     return toReturn
+}
+
+export interface GameType {
+    farmName: string
+    playerName: string
+    money: number
+
+    moveNumber: number
+    day: number
+
+    //! resources
+    resources: ResourceType[]
+
+    //! animals
+    animals: AnimalType[]
+}
+
+export interface GameCreateType {
+    farmName: string
+    playerName: string
+    money: number
+
+    moveNumber: number
+    day: number
+    
+    seedAmt: number
+    wheatAmt: number
+    eggAmt: number
+    milkAmt: number
+
+    chickenAmt: number
+    cowAmt: number
 }

@@ -1,16 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Game, getGameFromString } from '../classes/Game'
+import { GameCreateType, GameType, getGameFromString, getGameToSave } from '../classes/Game'
 import { GameOptions } from './GameOptions'
+import { Header } from './Header'
 
 export const MainGame = () => {
     const navigate = useNavigate()
 
-    const [game, setGame] = useState<Game>()
+    const [game, setGame] = useState<GameType>()
 
     useEffect(() => {
         try {
-            const gottenGame: Game = JSON.parse(localStorage.getItem("game") || "")
+            const gottenGame: GameCreateType = JSON.parse(localStorage.getItem("game") || "")
     
             if (JSON.stringify(gottenGame) === "") {
                 navigate("/home")
@@ -22,12 +23,35 @@ export const MainGame = () => {
         }
     }, [navigate])
 
-    const handleUpdateGame = useCallback((gameToBe: Game) => {
-        if (game !== undefined) {
-            setGame(gameToBe)
-            window.location.reload()
+    const handleSaveGame = useCallback((
+        altGame: GameType | undefined = undefined
+    ) => {
+        let toSave
+
+        if (!!altGame) {
+            toSave = getGameToSave(altGame)
+        } else if (game !== undefined) {
+            toSave = getGameToSave(game)
         }
+
+        localStorage.setItem("game", JSON.stringify(toSave))
     }, [game])
+
+    const RenderHeader = useCallback(() => {
+        if (game === undefined) {
+            return <>loading...</>
+        }
+        const handleChangeDay = () => {
+            setGame({
+                ...game,
+                day: game.day + .5
+            })
+            handleSaveGame(game)
+        }
+        return (
+            <Header currentGame={game} handleChangeDay={handleChangeDay}/>
+        )
+    }, [game, handleSaveGame])
 
     if (game === undefined) {
         return <>loading...</>
@@ -39,8 +63,12 @@ export const MainGame = () => {
                 <div className="header">
                     {game.playerName}'s "{game.farmName}"
                 </div>
-                {/*  */}
-                <GameOptions game={game} setGame={handleUpdateGame} /> <br />
+                <RenderHeader />
+                <GameOptions
+                    game={game}
+                    setGame={setGame}
+                    handleSaveGame={handleSaveGame}
+                /> <br />
             </div>
         </>
     )

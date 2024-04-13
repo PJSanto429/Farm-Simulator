@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react'
-import { Game } from '../classes/Game'
+import { useCallback, useState } from 'react'
+import { GameType, getGameFromString } from '../classes/Game'
 
 export const NewGameOptions = (props: {
-    onNewGameCreated: (createdGame: Game) => void
+    onNewGameCreated: (createdGame: GameType) => void
 }) => {
     const {
         onNewGameCreated
@@ -13,7 +13,21 @@ export const NewGameOptions = (props: {
 
     const handleCreateNewGame = useCallback(() => {
         const nameToUse = playerName.charAt(0).toUpperCase() + playerName.slice(1)
-        const game = new Game(farmName, nameToUse, 0, 0, 0, 1000, 0)
+
+        const game = getGameFromString({
+            farmName: farmName,
+            playerName: nameToUse,
+            money: 1000,
+            moveNumber: 0,
+            day: 0,
+            seedAmt: 0,
+            wheatAmt: 0,
+            eggAmt: 0,
+            milkAmt: 0,
+            chickenAmt: 0,
+            cowAmt: 0
+        })
+
         onNewGameCreated(game)
     }, [farmName, playerName, onNewGameCreated])
 

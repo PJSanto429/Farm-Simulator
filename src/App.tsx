@@ -2,62 +2,47 @@ import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { MainOptions } from './Components/MainOptions'
-import { Game } from './classes/Game'
 import { NewGameOptions } from './Components/NewGameOptions'
+import { GameType, getGameToSave } from './classes/Game'
+import { LoadGame } from './LoadGame'
 import './scrollbar.css'
 import './index.css'
 
 export const App = () => {
-    const [text, setText] = useState('')
-    const [allText, setAllText] = useState<string[]>([])
-    // const [currentGame, setCurrentGame] = useState<Game>()
-
+    const [welcoming, setWelcoming] = useState(true)
     const [showMainOptions, setShowMainOptions] = useState(true)
     const [showNewGameOptions, setShowNewGameOptions] = useState(false)
-    const [showTextBar, setShowTextBar] = useState(false)
-    const [welcoming, setWelcoming] = useState(true)
+    const [loadGame, setLoadGame] = useState(false)
 
     const navigate = useNavigate()
-
-    const print = useCallback((words: string) => {
-        setAllText([
-            ...allText, words
-        ])
-    }, [allText])
-
-    const handleSubmit = useCallback(() => {
-        setText("")
-        setAllText([
-            ...allText,
-            text
-        ])
-    }, [text, allText])
 
     const handleStartNewGame = useCallback(() => {
         setShowMainOptions(false)
         setShowNewGameOptions(true)
-
-        // setCurrentGame(new Game())
-
     }, [])
     
-    const onNewGameCreated = (newGame: Game) => {
+    const onGameCreatedOrLoaded = (newGame: GameType) => {
         setShowNewGameOptions(false)
-        // setCurrentGame(newGame)
-        localStorage.setItem("game", JSON.stringify(newGame))
+        const gameToSave = getGameToSave(newGame)
+        localStorage.setItem("game", JSON.stringify(gameToSave))
         navigate("/game")
     }
 
     const handleLoadGame = () => {
-        print("Handle Load Game - function not implemented")
+        setLoadGame(true)
+        setShowMainOptions(false)
+        setWelcoming(false)
+    }
+
+    const onFail = () => {
+        setLoadGame(false)        
+        setWelcoming(true)
+        setShowMainOptions(true)
     }
 
     return (
         <>
             <div className="main">
-                {allText.map((t) => (
-                    <div>{t}</div>
-                ))}
                 {welcoming &&
                     <>
                         Welcome to Farming Simulator
@@ -72,20 +57,11 @@ export const App = () => {
                         />
                     </>
                 }
-                {showNewGameOptions &&
-                    <NewGameOptions onNewGameCreated={onNewGameCreated} />
+                {loadGame &&
+                    <LoadGame handleLoadGame={onGameCreatedOrLoaded} onFail={onFail}/>
                 }
-                {showTextBar &&
-                    <form onSubmit={(e) => {e.preventDefault(); handleSubmit()}}>
-                        <input
-                            type="text"
-                            value={text}
-                            onChange={(e) => setText(e.target.value)}
-                        />
-                        <div>
-                            <button type="submit">Enter</button>
-                        </div>
-                    </form>
+                {showNewGameOptions &&
+                    <NewGameOptions onNewGameCreated={onGameCreatedOrLoaded} />
                 }
             </div>
         </>
