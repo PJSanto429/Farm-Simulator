@@ -1,15 +1,14 @@
 import { useCallback, useState } from 'react'
 
 export const BuyAnimals = (props: {
-    showBuyAnimals: boolean
-    setShowBuyAnimals: (show: boolean) => void
     handleBuyAnimals: (animal: string, amount: number) => void
 }) => {
     const {
-        showBuyAnimals,
-        setShowBuyAnimals,
         handleBuyAnimals
     } = props
+    
+
+    const [showBuyAnimals, setShowBuyAnimals] = useState(false)
 
     const [animalToBuy, setAnimalToBuy] = useState<string>()
     const [amount, setAmount] = useState<number>(0)
@@ -17,11 +16,12 @@ export const BuyAnimals = (props: {
     const [showConfirm, setShowConfirm] = useState(false)
 
     const buyAnimals = useCallback(() => {
-        handleReset()
         if (animalToBuy !== undefined && amount > 0) {
             setShowConfirm(false)   
             handleBuyAnimals(animalToBuy, amount)
+            setShowBuyAnimals(false)
         }
+        handleReset()
     }, [animalToBuy, amount, handleBuyAnimals])
 
     const handleReset = () => {
@@ -66,7 +66,8 @@ export const BuyAnimals = (props: {
 
     if (showBuyAnimals) {
         return (
-            <>
+            <div className="section">
+                <br />
                 <label htmlFor='animal'>Animal:</label>
                 <select onChange={(e) => {setAnimalToBuy(e.target.value)}} name='animal'>
                     <option value=''>Select...</option>
@@ -79,6 +80,7 @@ export const BuyAnimals = (props: {
                     name='amount'
                     type='number'
                     min={0}
+                    className="number"
                     placeholder='5...'
                     onChange={
                         (e) => {
@@ -88,7 +90,7 @@ export const BuyAnimals = (props: {
                 />
                 <br />
                 <Confirm />
-            </>
+            </div>
         )
     }
 

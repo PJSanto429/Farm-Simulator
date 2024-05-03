@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    color: green;
+    color: rgb(15, 196, 15);
     font-size: 24px;
 }
 
@@ -34,7 +34,8 @@ button:hover {
 }
 button:disabled {
     background-color: darkgray;
-    color: rgb(111, 111, 111)
+    color: rgb(111, 111, 111);
+    cursor: not-allowed;
 }
 button.secondary {
     background-color: rgb(205, 95, 44);
@@ -62,7 +63,12 @@ input {
     border-radius: 5px;
     font-size: 15px;
     font-weight: 549;
+    margin-top: 10px;
+    margin-left: 0px;
     margin-bottom: 10px;
+}
+input.number {
+    width: 50px;
 }
 label {
     margin-right: 10px;
@@ -85,16 +91,28 @@ label {
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 .option {
     background-color: rgb(40, 40, 40);
     border-radius: 15px;
-    /* box-shadow: 2px 2px 5px white; */
     width: 45%;
     max-height: 90%;
+    min-height: 200px;
     padding: 15px;
     text-align: left;
+    overflow-y: scroll;
 }
-/* .leftOptions {} */
+@media screen and (max-width: 850px) {
+    .options {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        height: unset;
+    }
+
+    .option {
+        width: unset;
+    }
+}
 .rightOptions {
     overflow-y: scroll;
     text-align: center;
@@ -112,4 +130,40 @@ label {
     display: flex;
     justify-content: space-around;
     margin: -15px;
+}
+
+.headerText {
+    justify-content: center;
+    display: grid;
+    margin-bottom: 15px;
+}
+
+.section {
+    background-color: #5a5a5a;
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px 0px #9b9b9b;
+    padding-left: 10px;
+}
+.subSection {
+    background-color: #353535;
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px 0px #9b9b9b;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.WIP {
+    outline: 3px dotted red;
+}
+
+.infoText {
+    color: white;
+    font-size: large;
+}
+
+.actionText {
+    color: #00e5ff;
+}
+.actionText:hover {
+    cursor: pointer;
 }

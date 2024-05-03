@@ -1,0 +1,41 @@
+.statusMain {
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 3px;
+    color: #d4d4d4;
+    font-size: 14px;
+    padding: 5px;
+    padding-bottom: 20px;
+    height: 240px;
+    border-radius: 15px;
+    overflow-y: scroll;
+}
+
+.statusHeader {
+    margin-bottom: 20px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.oneStatus {
+    display: flex;
+    margin: -25px 0px;
+    margin-left: 5px;
+    padding: -100px 0px 0px 0px;
+}
+
+.warning {
+    color: red;
+}
+.success {
+    color: #00c100;
+}
+.unknown {
+    color: #ffca00;
+}
+.event {
+    color: #00d6ff;
+}

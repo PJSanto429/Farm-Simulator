@@ -1,0 +1,28 @@
+.tabsMain {
+    background-color: #3d3d3d;
+    border-radius: 15ps;
+}
+
+.tabButton {
+    all: unset;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+    margin-left: 10px;
+    margin-right: 5px;
+    /* padding-top: -15px; */
+}
+
+/* .tabButton */
+
+.tab-content {
+    /* border: 1px solid #ccc; */
+    padding: 20px;
+    padding-top: -15px;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+}

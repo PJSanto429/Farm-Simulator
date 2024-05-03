@@ -1,6 +1,6 @@
 import { GameHelper, GameType } from '../classes/Game'
-import { Stats } from './Sides/Stats/Stats'
-import { Options } from './Sides/Stats/Options/Options'
+import { Stats } from './Sides/Stats'
+import { Options } from './Sides/Options/Options'
 
 export const GameOptions = (props: {
     game: GameType
@@ -10,7 +10,8 @@ export const GameOptions = (props: {
     const {
         game,
         setGame,
-        handleSaveGame
+        handleSaveGame,
+        // time
     } = props
     const helper = new GameHelper()
     
@@ -18,43 +19,47 @@ export const GameOptions = (props: {
         animalToBuy: string,
         amount: number
     ) => {
+        // console.log(animalToBuy, amount)
         if (game === undefined) {
             return
         }
 
-        const animal = helper.getAnimalByName(animalToBuy, game.animals)
+        const animal = helper.getAnimalByName(animalToBuy, game.farm.animals)
         if (animal === null) {
             return
         }
 
         const toSpend = animal.price * amount
-        if (toSpend > game.money) {
-            console.log("not enough money - 3")
+        if (toSpend > game.farm.money) {
             return
         }
 
-        const gameToBe = {
+        const gameToBe: GameType = {
             ...game,
-            money: game.money - toSpend,
-            animals: game.animals.map((addingAnimal) => {
-                if (addingAnimal.name !== animal.name) {
-                    return addingAnimal
-                }
-                return {
-                    ...addingAnimal,
-                    amount: addingAnimal.amount + amount
-                }
-            })
+            farm: {
+                ...game.farm,
+                money: game.farm.money - toSpend,
+                animals: game.farm.animals.map((addingAnimal) => {
+                    if (addingAnimal.name !== animal.name) {
+                        return addingAnimal
+                    }
+                    return {
+                        ...addingAnimal,
+                        amount: addingAnimal.amount + amount
+                    }
+                })
+            }
         }
+        console.log(game)
         setGame(gameToBe)
         handleSaveGame(gameToBe)
     }
-
     return (
         <>
             <div className='options'>
                 <div className='leftOptions option'>
-                    <Stats game={game} />
+                    <Stats game={game} setGame={setGame} handleSaveGame={handleSaveGame} />
+                    {/* <Status status={game.status}/> */}
                 </div>
                 <div className='rightOptions option'>
                     <div className="optionsHeader">

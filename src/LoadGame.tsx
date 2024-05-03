@@ -47,8 +47,8 @@ export const LoadGame = (props: {
                 <>
                     Game found:
                     <div>
-                        <text>Farm Name: {loadedGame.farmName}</text><br />
-                        <text>Player Name: {loadedGame.playerName}</text>
+                        <text>Farm Name: {loadedGame.farm.farmName}</text><br />
+                        <text>Player Name: {loadedGame.farm.playerName}</text>
                     </div>
 
                     <button onClick={() => handleLoadGame(loadedGame)}>

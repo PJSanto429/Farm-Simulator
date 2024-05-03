@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect} from 'react'
 
 export const Time = (props: {
     handleChangeDay: () => void
     day: number
+    
+    minutes: number
+    setMinutes: (minute: number) => void
+
+    hours: number
+    setHours: (hour: number) => void
 }) => {
 
     const {
         handleChangeDay,
-        day
-    } = props
+        day,
 
-    const [minutes, setMinutes] = useState(0)
-    const [hours, setHours] = useState(1)
+        minutes,
+        setMinutes,
+
+        hours,
+        setHours
+    } = props
     
     useEffect(() => {
         let intervalId = setInterval(() => {
@@ -41,8 +50,8 @@ export const Time = (props: {
     }
 
     return (
-        <text>
+        <span>
             {hours}:{minutes.toString().padStart(2, "0")}<AmOrPm />
-        </text>
+        </span>
     )
 }

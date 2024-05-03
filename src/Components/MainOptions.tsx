@@ -13,7 +13,7 @@ export const MainOptions = (props: {
     return (
         <>
             <div>
-                <text>What would you like to do?</text>
+                <span>What would you like to do?</span>
                 <div>
                     <button
                         onClick={() => {

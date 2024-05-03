@@ -33,7 +33,6 @@ export const MainGame = () => {
         } else if (game !== undefined) {
             toSave = getGameToSave(game)
         }
-
         localStorage.setItem("game", JSON.stringify(toSave))
     }, [game])
 
@@ -49,7 +48,10 @@ export const MainGame = () => {
             handleSaveGame(game)
         }
         return (
-            <Header currentGame={game} handleChangeDay={handleChangeDay}/>
+            <Header
+                currentGame={game}
+                handleChangeDay={handleChangeDay}
+            />
         )
     }, [game, handleSaveGame])
 
@@ -61,7 +63,7 @@ export const MainGame = () => {
         <>
             <div className="main">
                 <div className="header">
-                    {game.playerName}'s "{game.farmName}"
+                    {game.farm.playerName}'s "{game.farm.farmName}" Farm
                 </div>
                 <RenderHeader />
                 <GameOptions

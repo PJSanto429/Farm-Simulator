@@ -1,0 +1,70 @@
+
+.manyFarms {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.oneFarm {
+    width: 40%;
+    padding: 10px;
+    margin: 5px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* background-color: #5a5a5a;
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px 0px #9b9b9b; */
+}
+
+.oneFarmStats {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0px;
+}
+
+.oneFarmName {
+    margin-right: 10px;
+}
+
+.oneFarmButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.farmTradeMain {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.farmTradeChild {
+    width: 45%;
+}
+
+@media screen and (max-width: 850px) {
+    .farmTradeMain {
+        flex-wrap: nowrap;
+        flex-direction: column;
+    }
+    .farmTradeChild {
+        align-items: center;
+        width: 100%;
+    }
+}
+
+.farmTrade {
+    width: 100%;
+}
+
+.propTrade {
+    font-size: small;
+}

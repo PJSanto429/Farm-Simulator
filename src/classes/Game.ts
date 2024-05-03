@@ -1,5 +1,6 @@
-import { AnimalType } from './Animals/Animal'
-import { ResourceType } from './Resources/Resource'
+import { AnimalType, Chicken, Cow } from './Animals/Animal'
+import { FarmType, OtherFarmType, TradeType } from './Farm'
+import { Egg, Milk, Seed, Wheat } from './Resources/Resource'
 
 export class GameHelper {
     getAnimalByName(
@@ -16,17 +17,21 @@ export class GameHelper {
 
 export const getGameToSave = (game: GameType): GameCreateType => {
     return {
-        farmName: game.farmName,
-        playerName: game.playerName,
-        money: game.money,
+        id: game.farm.id,
+        farmName: game.farm.farmName,
+        playerName: game.farm.playerName,
+        money: game.farm.money,
         moveNumber: game.moveNumber,
         day: game.day,
-        seedAmt: game.resources.find((r) => r.name === "Seed")?.amount || 0,
-        wheatAmt: game.resources.find((r) => r.name === "Wheat")?.amount || 0,
-        eggAmt: game.resources.find((r) => r.name === "Egg")?.amount || 0,
-        milkAmt: game.resources.find((r) => r.name === "Milk")?.amount || 0,
-        chickenAmt: game.animals.find((r) => r.name === "Chicken")?.amount || 0,
-        cowAmt: game.animals.find((r) => r.name === "Cow")?.amount || 0
+        status: game.status,
+        seedAmt: game.farm.resources.find((r) => r.name === "Seed")?.amount || 0,
+        wheatAmt: game.farm.resources.find((r) => r.name === "Wheat")?.amount || 0,
+        eggAmt: game.farm.resources.find((r) => r.name === "Egg")?.amount || 0,
+        milkAmt: game.farm.resources.find((r) => r.name === "Milk")?.amount || 0,
+        chickenAmt: game.farm.animals.find((r) => r.name === "Chicken")?.amount || 0,
+        cowAmt: game.farm.animals.find((r) => r.name === "Cow")?.amount || 0,
+        otherFarms: game.otherFarms,
+        trades: game.trades
     }
 }
 
@@ -34,83 +39,68 @@ export const getGameFromString = (
     gameString: GameCreateType
 ): GameType => {
     const toReturn: GameType = {
-        farmName: gameString.farmName,
-        playerName: gameString.playerName,
-        resources: [
-            {
-                name: "Seed",
-                weight: 0.1,
-                amount: gameString.seedAmt
-            },
-            {
-                name: "Egg",
-                weight: .3,
-                amount: gameString.eggAmt
-            },
-            {
-                name: "Wheat",
-                weight: .2,
-                amount: gameString.wheatAmt
-            },
-            {
-                name: "Milk",
-                weight: .8,
-                amount: gameString.milkAmt
-            },
-        ],
-        animals: [
-            {
-                name: "Chicken",
-                weight: 6,
-                price: 5,
-                lifespan: 5,
-                requiredSpace: 5,
-                food: "Seed",
-                foodPerDay: 10,
-                output: "Egg",
-                outputPerDay: 1,
-                amount: gameString.chickenAmt
-            },
-            {
-                name: "Cow",
-                weight: 1100,
-                price: 500,
-                lifespan: 15,
-                requiredSpace: 30,
-                food: "Wheat",
-                foodPerDay: 25,
-                output: "Milk",
-                outputPerDay: 7,
-                amount: gameString.cowAmt
-            }
-        ],
-        money: gameString.money,
+        farm: {
+            id: gameString.id,
+            farmName: gameString.farmName,
+            playerName: gameString.playerName,
+            resources: [
+                {
+                    ...Seed,
+                    amount: gameString.seedAmt
+                },
+                {
+                    ...Egg,
+                    amount: gameString.eggAmt
+                },
+                {
+                    ...Wheat,
+                    amount: gameString.wheatAmt
+                },
+                {
+                    ...Milk,
+                    amount: gameString.milkAmt
+                },
+            ],
+            animals: [
+                {
+                    ...Chicken,
+                    amount: gameString.chickenAmt
+                },
+                {
+                    ...Cow,
+                    amount: gameString.cowAmt
+                }
+            ],
+            money: gameString.money
+        },
+        trades: gameString.trades,
         moveNumber: gameString.moveNumber,
-        day: gameString.day
+        day: gameString.day,
+        status: [],
+        otherFarms: gameString.otherFarms
     }
 
     return toReturn
 }
 
 export interface GameType {
-    farmName: string
-    playerName: string
-    money: number
+    farm: FarmType
 
+    status: StatusType[]
+    otherFarms: OtherFarmType[]
     moveNumber: number
     day: number
-
-    //! resources
-    resources: ResourceType[]
-
-    //! animals
-    animals: AnimalType[]
+    trades: TradeType[]
 }
 
 export interface GameCreateType {
+    id: number
     farmName: string
     playerName: string
     money: number
+    status: StatusType[]
+    otherFarms: OtherFarmType[]
+    trades: TradeType[]
 
     moveNumber: number
     day: number
@@ -122,4 +112,22 @@ export interface GameCreateType {
 
     chickenAmt: number
     cowAmt: number
+}
+
+type StatusTypeType = "warning" | "success" | "unknown" | "event"
+type StatusTimePeriodType = "AM" | "PM"
+
+export interface StatusTimeType {
+    hour: number
+    minute: number
+    timePeriod: StatusTimePeriodType
+}
+
+export interface StatusType {
+    message: string
+    type: StatusTypeType
+    createdAt: {
+        day: number
+        time: StatusTimeType
+    }
 }
