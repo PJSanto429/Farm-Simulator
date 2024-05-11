@@ -10,8 +10,7 @@ export const GameOptions = (props: {
     const {
         game,
         setGame,
-        handleSaveGame,
-        // time
+        handleSaveGame
     } = props
     const helper = new GameHelper()
     
@@ -19,7 +18,6 @@ export const GameOptions = (props: {
         animalToBuy: string,
         amount: number
     ) => {
-        // console.log(animalToBuy, amount)
         if (game === undefined) {
             return
         }
@@ -50,10 +48,48 @@ export const GameOptions = (props: {
                 })
             }
         }
-        console.log(game)
         setGame(gameToBe)
         handleSaveGame(gameToBe)
     }
+
+    const handleBuyResources = (
+        resourceToBuy: string,
+        amount: number
+    ) => {
+        if (game === undefined) {
+            return
+        }
+
+        const resource = helper.getResourceByName(resourceToBuy, game.farm.resources)
+        if (resource === null) {
+            return
+        }
+
+        const toSpend = resource.price * amount
+        if (toSpend > game.farm.money) {
+            return
+        }
+
+        const gameToBe: GameType = {
+            ...game,
+            farm: {
+                ...game.farm,
+                money: game.farm.money - toSpend,
+                resources: game.farm.resources.map((addingResource) => {
+                    if (resource.name !== addingResource.name) {
+                        return addingResource
+                    }
+                    return {
+                        ...addingResource,
+                        amount: addingResource.amount + amount
+                    }
+                })
+            }
+        }
+        setGame(gameToBe)
+        handleSaveGame(gameToBe)
+    }
+
     return (
         <>
             <div className='options'>
@@ -68,6 +104,7 @@ export const GameOptions = (props: {
                     <Options
                         game={game}
                         handleBuyAnimal={handleBuyAnimal}
+                        handleBuyResources={handleBuyResources}
                     />
                 </div>
             </div>

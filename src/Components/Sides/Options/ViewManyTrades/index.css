@@ -1,15 +1,45 @@
 
+.manyTrades {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
 .oneTrade {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
     align-items: center;
-    /* font-size: medium; */
+    padding-bottom: 0px;
 }
-.tradeName {
-    text-decoration: underline;
+.singleTrade {
+    width: 40%;
+    font-size: medium;
 }
 .arrows {
     display: flex;
+}
+.tradeDay {
+    margin-top: -5px;
+    margin-bottom: -20px;
+}
+.tradeName {
+    height: 110px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.pending {
+    color: #00d6ff;
+}
+.declined {
+    color: red;
+}
+.accepted {
+    color: #00c100;
 }

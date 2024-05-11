@@ -1,35 +1,37 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState } from "react"
 
-export const BuyAnimals = (props: {
-    handleBuyAnimals: (animal: string, amount: number) => void
+export const BuyResources = (props: {
+    handleBuyResources: (resource: string, amount: number) => void
     showing: "none" | "animals" | "resources"
-    setShowing: (e: "none" | "animals") => void
+    setShowing: (e: "none" | "resources") => void
 }) => {
     const {
-        handleBuyAnimals,
+        handleBuyResources,
         showing,
         setShowing
     } = props
-    
-    const [animalToBuy, setAnimalToBuy] = useState<string>()
+
+    const [resourceToBuy, setResourceToBuy] = useState<string>()
     const [amount, setAmount] = useState<number>(0)
-
     const [showConfirm, setShowConfirm] = useState(false)
+    
+    const handleReset = () => {
+        setShowConfirm(false)
+        setResourceToBuy("")
+        setAmount(0)
+    }
 
-    const buyAnimals = useCallback(() => {
-        if (animalToBuy !== undefined && amount > 0) {
-            setShowConfirm(false)   
-            handleBuyAnimals(animalToBuy, amount)
+    const buyResources = useCallback(() => {
+        if (resourceToBuy !== undefined && amount > 0) {
+            // console.clear()
+            // console.log("resource ==> ", resourceToBuy)
+            // console.log("amount ==>", amount)
+            setShowConfirm(false)
+            handleBuyResources(resourceToBuy, amount)
             setShowing("none")
         }
         handleReset()
-    }, [animalToBuy, amount, handleBuyAnimals, setShowing])
-
-    const handleReset = () => {
-        setShowConfirm(false)
-        setAnimalToBuy("")
-        setAmount(0)
-    }
+    }, [amount, handleBuyResources, resourceToBuy, setShowing])
 
     const Confirm = useCallback(() => (
         <>
@@ -45,35 +47,37 @@ export const BuyAnimals = (props: {
             </button>
             {!showConfirm &&
                 <button
-                    disabled={!amount || !animalToBuy}
+                    disabled={!amount || !resourceToBuy}
                     onClick={() => {setShowConfirm(true)}}
                 >
                     Buy
                 </button>
             }
             {showConfirm &&
-                <button onClick={() => {buyAnimals()}}>
+                <button onClick={() => {buyResources()}}>
                     Press again to confirm
                 </button>
             }
         </>
     ), [
-        showConfirm,
-        buyAnimals,
         amount,
-        animalToBuy,
-        setShowing
+        setShowing,
+        showConfirm,
+        buyResources,
+        resourceToBuy
     ])
 
-    if (showing === 'animals') {
+    if (showing === 'resources') {
         return (
             <div className="section">
                 <br />
-                <label htmlFor='animal'>Animal:</label>
-                <select onChange={(e) => {setAnimalToBuy(e.target.value)}} name='animal'>
+                <label htmlFor='resource'>Resource:</label>
+                <select onChange={(e) => {setResourceToBuy(e.target.value)}} name='resource'>
                     <option value=''>Select...</option>
-                    <option value="Chicken">Chicken</option>
-                    <option value="Cow">Cow</option>
+                    <option value="Seed">Seeds</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Egg">Eggs</option>
+                    <option value="Milk">Milk</option>
                 </select>
 
                 <label htmlFor='amount'>Amount:</label>
@@ -83,11 +87,7 @@ export const BuyAnimals = (props: {
                     min={0}
                     className="number"
                     placeholder='5...'
-                    onChange={
-                        (e) => {
-                            setAmount(parseInt(e.target.value))
-                        }
-                    }
+                    onChange={(e) => setAmount(parseInt(e.target.value))}
                 />
                 <br />
                 <Confirm />
@@ -99,12 +99,12 @@ export const BuyAnimals = (props: {
         <div>
             {showing === "none" &&
                 <button
-                    onClick={() => setShowing("animals")}
-                    // disabled={showBuyAnimals}
+                    onClick={() => setShowing("resources")}
                 >
-                    Buy Animals
+                    Buy Resources
                 </button>
             }
         </div>
     )
+    
 }

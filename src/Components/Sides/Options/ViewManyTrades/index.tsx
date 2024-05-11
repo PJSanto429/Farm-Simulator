@@ -46,22 +46,26 @@ export const ViewManyTrades = (props: {
         // to and from farms
         const toFarm: FarmType = game.otherFarms.find((farm) => farm.id === trade.toFarm) || game.farm
         const fromFarm: FarmType = game.otherFarms.find((farm) => farm.id === trade.fromFarm) || game.farm
-        const toMe: boolean = toFarm.id === game.farm.id
+        // const toMe: boolean = toFarm.id === game.farm.id
 
         return (
-            <div className="oneTrade">
-                <div className="tradeTo">
-                    <span className="tradeName">
-                        {toFarm.playerName}{toMe? "(Me)" : ""}
-                    </span>
-                    <DisplayItemTrade data={trade.out} />
+            <div className="subSection singleTrade">
+                <div className="tradeDay">
+                    Day: {Math.floor(trade.dayCreated)} <br />
+                    <span className={trade.status}>{trade.status}</span>
                 </div>
-                &harr;
-                <div className="tradeFrom">
+                <div className="oneTrade">
                     <span className="tradeName">
-                        {fromFarm.playerName}{!toMe? "(Me)" : ""}
+                        {toFarm.playerName}
+                        <br />"{toFarm.farmName}"
+                        <DisplayItemTrade data={trade.out} />
                     </span>
-                    <DisplayItemTrade data={trade.in} />
+                    &harr;
+                    <span className="tradeName">
+                        {fromFarm.playerName}'s
+                        <br />"{fromFarm.farmName}"
+                        <DisplayItemTrade data={trade.in} />
+                    </span>
                 </div>
             </div>
         )
@@ -74,12 +78,12 @@ export const ViewManyTrades = (props: {
                 <br />
                 {showKey &&
                     <span className="infoText">
-                        Showing what each farm received from a trade.npm &nbsp;
+                        Showing what each farm received from a trade.<br />
                     </span>
                 }
                 <span className="infoText actionText" onClick={() => setShowKey(!showKey)}>
-                    {showKey && <>Hide Key </> }
-                    {!showKey && <>Show Key </> }
+                    {showKey && <>Hide Help</> }
+                    {!showKey && <>Show Help</> }
                 </span>
             </>
         )
@@ -88,7 +92,7 @@ export const ViewManyTrades = (props: {
     return (
         <div className="section">
             <>
-                Trades:
+                Trades
                 {!trades.length &&
                     <>
                         <br />
@@ -100,11 +104,11 @@ export const ViewManyTrades = (props: {
                 {!!trades.length &&
                     <Helper />
                 }
-                {trades.map((trade, index) => (
-                    <div className="subSection">
+                <div className="manyTrades">
+                    {trades.map((trade, index) => (
                         <OneTrade key={index} trade={trade} />
-                    </div>
-                ))}
+                    ))}
+                </div>
             </>
         </div>
     )

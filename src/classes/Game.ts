@@ -1,14 +1,27 @@
 import { AnimalType, Chicken, Cow } from './Animals/Animal'
 import { FarmType, OtherFarmType, TradeType } from './Farm'
-import { Egg, Milk, Seed, Wheat } from './Resources/Resource'
+import { Egg, Milk, ResourceType, Seed, Wheat } from './Resources/Resource'
 
 export class GameHelper {
     getAnimalByName(
-        nameToFind: String, animals: AnimalType[]
+        nameToFind: String,
+        animals: AnimalType[]
     ): AnimalType | null {
         for (var animal of animals) {
             if (animal.name === nameToFind) {
                 return animal
+            }
+        }
+        return null
+    }
+
+    getResourceByName(
+        nameToFind: string,
+        resources: ResourceType[]
+    ): ResourceType | null {
+        for (var resource of resources) {
+            if (resource.name === nameToFind) {
+                return resource
             }
         }
         return null
@@ -33,6 +46,64 @@ export const getGameToSave = (game: GameType): GameCreateType => {
         otherFarms: game.otherFarms,
         trades: game.trades
     }
+}
+
+export const generateDailyResources = (
+    game: GameType
+): GameType => {
+    let newGame = game
+
+    for (const animal of game.farm.animals) {
+        const food = animal.food
+        const foodAmount = animal.foodPerDay
+
+        const output = animal.output
+        const outputAmount = animal.outputPerDay
+        const animalAmount = animal.amount
+        for (let i = 0; i < animalAmount; i++) {
+            if (animalAmount <= 0) {
+                console.log("no more animals")
+                break
+            }
+            const enoughFood = (newGame.farm.resources.find((r) => r.name === food)?.amount || 0) >= foodAmount
+            console.log("enough food ==> ", enoughFood)
+            newGame = {
+                ...newGame,
+                farm: {
+                    ...newGame.farm,
+                    resources: newGame.farm.resources.map((resource) => {
+                        if (resource.name === food && enoughFood) {
+                            return {
+                                ...resource,
+                                amount: resource.amount - foodAmount
+                            }
+                        }
+                        if (resource.name === output  && enoughFood) {
+                            return {
+                                ...resource,
+                                amount: resource.amount + outputAmount
+                            }
+                        }
+                        return resource
+                    }),
+                    animals: newGame.farm.animals.map((a) => {
+                        if (a.name !== animal.name) {
+                            return a
+                        }
+                        if (!enoughFood) {
+                            return {
+                                ...a,
+                                amount: a.amount - 1
+                            }
+                        }
+                        return a
+                    })
+                }
+            }
+        }
+    }
+
+    return newGame
 }
 
 export const getGameFromString = (

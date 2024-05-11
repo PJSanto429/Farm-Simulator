@@ -18,13 +18,25 @@ export const Stats = (props: {
     const chickenAmt = game.farm.animals.find((a) => a.name === "Chicken")?.amount || 0
     const cowAmt = game.farm.animals.find((a) => a.name === "Cow")?.amount || 0
 
-    const seedsAmt = game.farm.resources.find((r) => r.name === "Seeds")?.amount || 0
+    const seedsAmt = game.farm.resources.find((r) => r.name === "Seed")?.amount || 0
+    const wheatAmt = game.farm.resources.find((r) => r.name === "Wheat")?.amount || 0
+    const eggAmt = game.farm.resources.find((r) => r.name === "Egg")?.amount || 0
+    const milkAmt = game.farm.resources.find((r) => r.name === "Milk")?.amount || 0
 
     const onTradeSent = (e: CreateTradeType) => {
+        let newTradeId = 1
+        for (const trade of game.trades) {
+            if (trade.id >= newTradeId) {
+                newTradeId = trade.id + 1
+            }
+        }
+
         const toAdd: TradeType = {
             fromFarm: game.farm.id,
             toFarm: e.otherFarmId,
             status: "pending",
+            dayCreated: game.day,
+            id: newTradeId,
             
             in: {
                 type: e.typeIn as tradeType,
@@ -37,8 +49,6 @@ export const Stats = (props: {
                 amount: e.amountOut
             }
         }
-        //TODO make sure the game trades are being saved when the game saves
-        console.log("toAdd ==> ", toAdd)
         const newGame = {
             ...game,
             trades: [
@@ -46,7 +56,6 @@ export const Stats = (props: {
                 ...game.trades
             ]
         }
-        console.log('new game ==> ', newGame)
         setGame(newGame)
         handleSaveGame(newGame)
     }
@@ -70,6 +79,12 @@ export const Stats = (props: {
                         Money: ${game.farm.money}
                         <br />
                         Seeds: {seedsAmt}
+                        <br />
+                        Wheat: {wheatAmt}
+                        <br />
+                        Eggs: {eggAmt}
+                        <br />
+                        Milk: {milkAmt}
                     </div>
                 </div>
             </>
@@ -83,22 +98,6 @@ export const Stats = (props: {
     return (
         <>
             <Tabs tabs={tabs} />
-            {/* <div className="optionsHeader">
-                Stats
-            </div>
-            <div className="statsMain">
-                <div className="animalStats option">
-                    Chickens: {chickenAmt}
-                    <br />
-                    Cows: {cowAmt}
-                </div>
-
-                <div className="resourceStats option">
-                    Money: ${game.farm.money}
-                    <br />
-                    Seeds: {seedsAmt}
-                </div>
-            </div> */}
         </>
     )
 }

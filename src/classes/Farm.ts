@@ -38,6 +38,8 @@ export interface TradeType {
     toFarm: number
     fromFarm: number
     status: tradeStatus
+    dayCreated: number
+    id: number
 
     in: { //* toFarm
         type: tradeType

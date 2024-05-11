@@ -150,6 +150,7 @@ label {
     box-shadow: 2px 2px 4px 0px #9b9b9b;
     padding: 10px;
     margin-right: 10px;
+    /* width: fit-content; */
 }
 
 .WIP {

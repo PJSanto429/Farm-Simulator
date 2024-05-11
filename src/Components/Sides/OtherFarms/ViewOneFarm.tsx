@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { CreateTradeType, OtherFarmType, TradeType } from "../../../classes/Farm"
+import { CreateTradeType, OtherFarmType } from "../../../classes/Farm"
 import { FarmTrade } from "./Trade"
 
 export const ViewOneFarm = (props: {
