@@ -1,28 +1,29 @@
 .tabsMain {
     background-color: #3d3d3d;
-    border-radius: 15ps;
+    border-radius: 15px;
+    padding-left: 10px;
 }
 
 .tabButton {
     all: unset;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-bottom: none;
+    border-bottom: 1px solid white;
+    background-color: #9b9b9b;
     padding: 10px 20px;
+    color: black;
     cursor: pointer;
     font-size: 16px;
-    outline: none;
-    margin-left: 10px;
-    margin-right: 5px;
-    /* padding-top: -15px; */
+    border-right: 1px solid white;
+    font-weight: 600;
 }
 
-/* .tabButton */
+.tabButton:hover {
+    background-color: #d5d5d5;
+}
+
+.active {
+    background-color: #d5d5d5;
+}
 
 .tab-content {
-    /* border: 1px solid #ccc; */
-    padding: 20px;
-    padding-top: -15px;
-    border-top: none;
-    border-radius: 0 0 5px 5px;
+    padding: -20px;
 }

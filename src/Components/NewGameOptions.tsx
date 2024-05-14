@@ -81,7 +81,8 @@ export const NewGameOptions = (props: {
             cowAmt: 0,
             status: [],
             otherFarms: handleGetOtherFarms(),
-            trades: []
+            trades: [],
+            dailyPurchases: []
         })
 
         onNewGameCreated(game)

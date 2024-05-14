@@ -1,5 +1,6 @@
+import { el } from '@faker-js/faker'
 import { AnimalType, Chicken, Cow } from './Animals/Animal'
-import { FarmType, OtherFarmType, TradeType } from './Farm'
+import { DailyPurchase, FarmType, OtherFarmType, TradeType } from './Farm'
 import { Egg, Milk, ResourceType, Seed, Wheat } from './Resources/Resource'
 
 export class GameHelper {
@@ -44,7 +45,8 @@ export const getGameToSave = (game: GameType): GameCreateType => {
         chickenAmt: game.farm.animals.find((r) => r.name === "Chicken")?.amount || 0,
         cowAmt: game.farm.animals.find((r) => r.name === "Cow")?.amount || 0,
         otherFarms: game.otherFarms,
-        trades: game.trades
+        trades: game.trades,
+        dailyPurchases: game.dailyPurchases
     }
 }
 
@@ -62,11 +64,11 @@ export const generateDailyResources = (
         const animalAmount = animal.amount
         for (let i = 0; i < animalAmount; i++) {
             if (animalAmount <= 0) {
-                console.log("no more animals")
+                // console.log("no more animals")
                 break
             }
             const enoughFood = (newGame.farm.resources.find((r) => r.name === food)?.amount || 0) >= foodAmount
-            console.log("enough food ==> ", enoughFood)
+            // console.log("enough food ==> ", enoughFood)
             newGame = {
                 ...newGame,
                 farm: {
@@ -100,6 +102,56 @@ export const generateDailyResources = (
                     })
                 }
             }
+        }
+    }
+
+    return newGame
+}
+
+export const generateDailyPurchases = (
+    game: GameType
+): GameType => {
+    let newGame = game
+
+    for (const purchase of game.dailyPurchases.sort((a, b) => a.id - b.id)) {
+        if (!purchase.disabledAt) {
+            //? in stuff
+            if (purchase.in.type === "money") {
+                newGame = {
+                    ...newGame,
+                    farm: {
+                        ...newGame.farm,
+                        money: newGame.farm.money + purchase.in.amount
+                    }
+                }
+            } else {
+                newGame = {
+                    ...newGame,
+                    farm: {
+                        ...newGame.farm,
+                        animals: newGame.farm.animals.map((a) => {
+                            if (a.name === purchase.in.specificType) {
+                                return {
+                                    ...a,
+                                    amount: a.amount + purchase.in.amount
+                                }
+                            }
+                            return a
+                        }),
+                        resources: newGame.farm.resources.map((r) => {
+                            if (r.name === purchase.in.specificType) {
+                                return {
+                                    ...r,
+                                    amount: r.amount + purchase.in.amount
+                                }
+                            }
+                            return r
+                        })
+                    }
+                }
+            }
+
+            //? out stuff
         }
     }
 
@@ -148,7 +200,8 @@ export const getGameFromString = (
         moveNumber: gameString.moveNumber,
         day: gameString.day,
         status: [],
-        otherFarms: gameString.otherFarms
+        otherFarms: gameString.otherFarms,
+        dailyPurchases: gameString.dailyPurchases
     }
 
     return toReturn
@@ -162,6 +215,7 @@ export interface GameType {
     moveNumber: number
     day: number
     trades: TradeType[]
+    dailyPurchases: DailyPurchase[]
 }
 
 export interface GameCreateType {
@@ -172,6 +226,7 @@ export interface GameCreateType {
     status: StatusType[]
     otherFarms: OtherFarmType[]
     trades: TradeType[]
+    dailyPurchases: DailyPurchase[]
 
     moveNumber: number
     day: number

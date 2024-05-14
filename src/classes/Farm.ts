@@ -34,6 +34,12 @@ export interface CreateTradeType {
     otherFarmId: number
 }
 
+export interface TradeDetails {
+    type: tradeType
+    specificType: specificTradeType
+    amount: number
+}
+
 export interface TradeType {
     toFarm: number
     fromFarm: number
@@ -41,17 +47,22 @@ export interface TradeType {
     dayCreated: number
     id: number
 
-    in: { //* toFarm
-        type: tradeType
-        specificType: specificTradeType
-        amount: number
-    }
-    out: { //* fromFarm
-        type: tradeType
-        specificType: specificTradeType
-        amount: number
-    }
+    in: TradeDetails //* toFarm
+    out: TradeDetails //* fromFarm
 }
 export type tradeStatus = "approved" | "declined" | "pending"
 export type tradeType = "money" | "animal" | "resource"
-export type specificTradeType = "cow" | "chicken" | "seeds" | "milk" | "wheat" | "eggs"
+export type specificTradeType = "none" | "cow" | "chicken" | "seeds" | "milk" | "wheat" | "eggs"
+
+export interface DailyPurchase {
+    id: number
+    in: TradeDetails
+    out: TradeDetails
+
+    frequency: number
+    startDay: number
+
+    disabledAt?: number
+    updateDaily: boolean
+    // name?: string
+}

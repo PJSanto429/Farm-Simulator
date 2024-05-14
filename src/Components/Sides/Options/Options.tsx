@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { GameType } from '../../../classes/Game'
-import { BuyAnimals } from './BuyAnimals'
-import { BuyResources } from './BuyResources'
-import { SellAnimals } from './SellAnimals'
+import { BuyAnimals } from './Purchases/BuyAnimals'
+import { BuyResources } from './Purchases/BuyResources'
 import { ViewManyTrades } from './ViewManyTrades'
 import './options.css'
+import { TabProp, Tabs } from '../../Tabs'
+import { DailyPurchases } from './Purchases/Purchases/DailyPurchases'
+import { DailyPurchase } from '../../../classes/Farm'
 
 export const Options = (props: {
     game: GameType
+    setDailyPurchases: (p: DailyPurchase[]) => void
     handleBuyAnimal: (
         animal: string,
         amount: number
@@ -19,16 +22,17 @@ export const Options = (props: {
 }) => {
     const {
         game,
+        setDailyPurchases,
         handleBuyAnimal,
         handleBuyResources
     } = props
 
     const [buying, setBuying] = useState<"none" | "animals" | "resources">("none")
-    
-    return (
-        <>
-            {/* // TODO selling animals should sell for 75% of their buying price */}
-            {/* <SellAnimals showSellAnimals setShowSellAnimals={() => {}} handleSellAnimals={() => {}} /> */}
+
+    const tabs: TabProp[] = [
+        {
+            label: "Single Purchases",
+            content:
             <div className="playerOptions">
                 <BuyAnimals
                     showing={buying}
@@ -41,8 +45,34 @@ export const Options = (props: {
                     handleBuyResources={handleBuyResources}
                 />
             </div>
+        },
+        {
+            label: "Daily Purchases",
+            content: (
+                <div className="">
+                    <DailyPurchases
+                        currentDay={game.day}
+                        dailyPurchases={game.dailyPurchases}
+                        setDailyPurchases={setDailyPurchases}
+                    />
+                </div>
+            )
+        }
+    ]
+    
+    return (
+        <>
+            <div className="optionsHeader">
+                Purchase Options
+            </div>
+            <Tabs tabs={tabs} />
 
-            <ViewManyTrades game={game} trades={game.trades} />
+            <div className="manyTrades">
+                <ViewManyTrades game={game} trades={game.trades} />
+            </div>
+            
+            {/* // selling animals should sell for 75% of their buying price */}
+            {/* <SellAnimals showSellAnimals setShowSellAnimals={() => {}} handleSellAnimals={() => {}} /> */}
         </>
     )
 }

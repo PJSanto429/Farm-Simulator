@@ -1,6 +1,7 @@
 import { GameHelper, GameType } from '../classes/Game'
 import { Stats } from './Sides/Stats'
 import { Options } from './Sides/Options/Options'
+import { DailyPurchase } from '../classes/Farm'
 
 export const GameOptions = (props: {
     game: GameType
@@ -90,6 +91,15 @@ export const GameOptions = (props: {
         handleSaveGame(gameToBe)
     }
 
+    const handleSetDailyPurchases = (
+        dailyPurchases: DailyPurchase[]
+    ) => {
+        const newGame = { ...game, dailyPurchases}
+        setGame(newGame)
+        handleSaveGame(newGame)
+
+    }
+
     return (
         <>
             <div className='options'>
@@ -98,11 +108,9 @@ export const GameOptions = (props: {
                     {/* <Status status={game.status}/> */}
                 </div>
                 <div className='rightOptions option'>
-                    <div className="optionsHeader">
-                        Options
-                    </div>
                     <Options
                         game={game}
+                        setDailyPurchases={handleSetDailyPurchases}
                         handleBuyAnimal={handleBuyAnimal}
                         handleBuyResources={handleBuyResources}
                     />

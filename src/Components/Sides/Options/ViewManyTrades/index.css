@@ -2,7 +2,7 @@
 .manyTrades {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-around;
     flex-wrap: wrap;
 }
 

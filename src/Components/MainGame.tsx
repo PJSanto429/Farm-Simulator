@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { GameCreateType, GameType, generateDailyResources, getGameFromString, getGameToSave } from '../classes/Game'
 import { GameOptions } from './GameOptions'
 import { Header } from './Header'
-import { ResourceType } from '../classes/Resources/Resource'
 
 export const MainGame = () => {
     const navigate = useNavigate()
@@ -46,6 +45,9 @@ export const MainGame = () => {
                 ...game,
                 day: game.day + .5
             })
+            if (game.day % 1 === 0) {
+                console.log("it is a new day")
+            }
             handleSaveGame(game)
         }
         return (
@@ -61,71 +63,56 @@ export const MainGame = () => {
             return
         }
         
-        // const newGame: GameType = {
-        //     ...game,
-        //     farm: {
-        //         ...game.farm,
-        //         resources: game.farm.resources.map((r) => {
-        //             switch(r.name) {
-        //                 case "Seed":
-        //                     return {
-        //                         ...r,
-        //                         price: 0.
-        //                     }
-        //                 case "Egg":
-        //                     return {
-        //                         ...r,
-        //                         price: .5
-        //                     }
-        //                 case "Wheat":
-        //                     return {
-        //                         ...r,
-        //                         price: 1.15
-        //                     }
-        //                 case "Milk":
-        //                     return {
-        //                         ...r,
-        //                         price: 1
-        //                     }
-        //                 default:
-        //                     return r
-        //             }
-        //         })
-        //     },
-        //     otherFarms: game.otherFarms.map((otherFarm) => {
-        //         return {
-        //             ...otherFarm,
-        //             resources: otherFarm.resources.map((r) => {
-        //                 switch(r.name) {
-        //                     case "Seed":
-        //                         return {
-        //                             ...r,
-        //                             price: 0.01
-        //                         }
-        //                     case "Egg":
-        //                         return {
-        //                             ...r,
-        //                             price: .5
-        //                         }
-        //                     case "Wheat":
-        //                         return {
-        //                             ...r,
-        //                             price: 1.15
-        //                         }
-        //                     case "Milk":
-        //                         return {
-        //                             ...r,
-        //                             price: 1
-        //                         }
-        //                     default:
-        //                         return r
-        //                 }
-        //             })
-        //         }
-        //     })
-        // }
         console.log(game)
-
+        // handleSaveGame({
+        //     ...game,
+        //     dailyPurchases: [{
+        //         id: 1,
+        //         updateDaily: true,
+        //         in: {
+        //             type: "money",
+        //             specificType: "none",
+        //             amount: 9
+        //         },
+        //         out: {
+        //             type: "resource",
+        //             specificType: "seeds",
+        //             amount: 900
+        //         },
+        //         startDay: 0,
+        //         frequency: 90
+        //     }, {
+        //         id: 2,
+        //         updateDaily: false,
+        //         in: {
+        //             type: "money",
+        //             specificType: "none",
+        //             amount: 15
+        //         },
+        //         out: {
+        //             type: "resource",
+        //             specificType: "eggs",
+        //             amount: 30
+        //         },
+        //         startDay: 1,
+        //         frequency: 2
+        //     }, {
+        //         id: 3,
+        //         updateDaily: false,
+        //         in: {
+        //             type: "animal",
+        //             specificType: "cow",
+        //             amount: 2
+        //         },
+        //         out: {
+        //             type: "money",
+        //             specificType: "none",
+        //             amount: 1000
+        //         },
+        //         startDay: 1,
+        //         frequency: 15
+        //     }]
+        // })
     }
 
     if (game === undefined) {
@@ -140,9 +127,9 @@ export const MainGame = () => {
                 </div>
 
                 {/* //! god button */}
-                {/* <button onClick={handleGodButton}>
+                <button onClick={handleGodButton}>
                     God Button!
-                </button> */}
+                </button>
 
                 <RenderHeader />
                 <GameOptions

@@ -3,3 +3,8 @@
     display: flex;
     justify-content: center;
 }
+
+.manyTrades {
+    max-height: 430px;
+    overflow-y: scroll;
+}

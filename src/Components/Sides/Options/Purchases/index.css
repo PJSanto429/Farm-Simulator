@@ -1,0 +1,43 @@
+
+.manyPurchases {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.editing {
+    outline: 2px solid red;
+}
+
+.singlePurchase {
+    width: 45%;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    background-color: #353535;
+    box-shadow: 2px 2px 4px 0px #9b9b9b;
+    border-radius: 15px;
+    
+    p {
+        margin: 10px;
+    }
+
+    div {
+        padding: 0px;
+        margin: 0px;
+    }
+}
+
+.purchaseDetails {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.purchaseTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
