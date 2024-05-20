@@ -112,7 +112,8 @@ export const ViewOnePurchase = (props: {
                     purchase.frequency === 1 ? "" : purchase.frequency
                 } day{
                     purchase.frequency === 1 ? "" : "s"
-                }</p>
+                }</p> <br />
+                {/* disabled: {purchase.disabledAt || "no"} */}
             </div>
             <div className="purchaseDetails">
                 <div className="">

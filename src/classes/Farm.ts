@@ -34,6 +34,12 @@ export interface CreateTradeType {
     otherFarmId: number
 }
 
+export interface TradeDetailsCreate {
+    type: string
+    specificType: string
+    amount: number
+}
+
 export interface TradeDetails {
     type: tradeType
     specificType: specificTradeType
@@ -52,7 +58,7 @@ export interface TradeType {
 }
 export type tradeStatus = "approved" | "declined" | "pending"
 export type tradeType = "money" | "animal" | "resource"
-export type specificTradeType = "none" | "cow" | "chicken" | "seeds" | "milk" | "wheat" | "eggs"
+export type specificTradeType = "none" | "Cow" | "Chicken" | "Seed" | "Milk" | "Wheat" | "Egg"
 
 export interface DailyPurchase {
     id: number
@@ -63,6 +69,19 @@ export interface DailyPurchase {
     startDay: number
 
     disabledAt?: number
+    disabledReason?: string
     updateDaily: boolean
     // name?: string
+}
+
+export interface CreateDailyPurchaseType {
+    id: number
+    in: TradeDetailsCreate
+    out: TradeDetailsCreate
+
+    frequency: number
+    startDay: number
+
+    disabledAt?: number
+    updateDaily: boolean
 }

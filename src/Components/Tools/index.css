@@ -1,0 +1,24 @@
+
+thead {
+    /* outline: 2px solid red; */
+    border-bottom: 2px solid white;
+}
+table {
+    outline: 1px solid white;
+    padding: 15px;
+    width: 90%;
+}
+
+.tableMain {
+    width: 100%;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.left {
+    display: flex;
+    justify-content: flex-start;
+}

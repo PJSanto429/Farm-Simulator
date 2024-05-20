@@ -37,7 +37,7 @@ export const GameOptions = (props: {
             ...game,
             farm: {
                 ...game.farm,
-                money: game.farm.money - toSpend,
+                money: ((game.farm.money * 100) - (toSpend * 100)) / 100,
                 animals: game.farm.animals.map((addingAnimal) => {
                     if (addingAnimal.name !== animal.name) {
                         return addingAnimal
@@ -75,7 +75,7 @@ export const GameOptions = (props: {
             ...game,
             farm: {
                 ...game.farm,
-                money: game.farm.money - toSpend,
+                money: ((game.farm.money * 100) - (toSpend * 100)) / 100,
                 resources: game.farm.resources.map((addingResource) => {
                     if (resource.name !== addingResource.name) {
                         return addingResource

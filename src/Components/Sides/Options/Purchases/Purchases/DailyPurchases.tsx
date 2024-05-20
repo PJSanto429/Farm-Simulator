@@ -1,7 +1,8 @@
-import { useState } from "react"
-import { DailyPurchase } from "../../../../../classes/Farm"
+import { useCallback, useState } from "react"
+import { CreateDailyPurchaseType, DailyPurchase } from "../../../../../classes/Farm"
 import '../index.css'
 import { OnePurchase } from "./OnePurchase"
+import { CreateDailyPurchase } from "./CreatePurchase"
 
 export const DailyPurchases = (props: {
     currentDay: number
@@ -15,6 +16,7 @@ export const DailyPurchases = (props: {
     } = props
 
     const [purchaseToEdit, setPurchaseToEdit] = useState<DailyPurchase | null>()
+    const [purchaseToAdd, setPurchaseToAdd] = useState<CreateDailyPurchaseType>()
 
     const togglePurchase = (
         purchase: DailyPurchase,
@@ -49,19 +51,48 @@ export const DailyPurchases = (props: {
         }
     }
 
+    const handleStartAddingNewPurchase = useCallback(() => {
+        const maxId = dailyPurchases.reduce((max, p) => (p.id > max ? p.id : max), 0) + 1
+        setPurchaseToAdd({
+            id: maxId,
+            in: {
+                type: "",
+                specificType: "",
+                amount: 0
+            },
+            out: {
+                type: "",
+                specificType: "",
+                amount: 0
+            },
+            frequency: 1,
+            startDay: currentDay,
+            updateDaily: false
+        })
+    }, [currentDay, dailyPurchases])
+
     return (
         <>
             {!dailyPurchases.length &&
                 <p className="infoText">You have no daily purchases</p>
             }
-            {/* <button
-                onClick={() => console.log("adding a new purchase")}
-            >
-                Add Daily Purchase
-            </button> */}
+
+            {!purchaseToAdd &&
+                <button
+                    onClick={handleStartAddingNewPurchase}
+                >
+                    Add Daily Purchase
+                </button>
+            }
+
+            {!!purchaseToAdd &&
+                <CreateDailyPurchase
+                    purchaseToAdd={purchaseToAdd}
+                />
+            }
 
             <div className="manyPurchases">
-                {dailyPurchases.map(
+                {dailyPurchases.sort((a, b) => b.id - a.id).map(
                     (purchase) => <OnePurchase
                         key={purchase.id}
                         purchase={purchase}

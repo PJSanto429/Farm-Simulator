@@ -1,4 +1,3 @@
-import { el } from '@faker-js/faker'
 import { AnimalType, Chicken, Cow } from './Animals/Animal'
 import { DailyPurchase, FarmType, OtherFarmType, TradeType } from './Farm'
 import { Egg, Milk, ResourceType, Seed, Wheat } from './Resources/Resource'
@@ -64,11 +63,12 @@ export const generateDailyResources = (
         const animalAmount = animal.amount
         for (let i = 0; i < animalAmount; i++) {
             if (animalAmount <= 0) {
-                // console.log("no more animals")
                 break
             }
-            const enoughFood = (newGame.farm.resources.find((r) => r.name === food)?.amount || 0) >= foodAmount
-            // console.log("enough food ==> ", enoughFood)
+            const enoughFood = (
+                newGame.farm.resources.find((r) => r.name === food)?.amount || 0
+            ) >= foodAmount
+
             newGame = {
                 ...newGame,
                 farm: {
@@ -88,18 +88,18 @@ export const generateDailyResources = (
                         }
                         return resource
                     }),
-                    animals: newGame.farm.animals.map((a) => {
-                        if (a.name !== animal.name) {
-                            return a
-                        }
-                        if (!enoughFood) {
-                            return {
-                                ...a,
-                                amount: a.amount - 1
-                            }
-                        }
-                        return a
-                    })
+                    // animals: newGame.farm.animals.map((a) => {
+                    //     if (a.name !== animal.name) {
+                    //         return a
+                    //     }
+                    //     if (!enoughFood) {
+                    //         return {
+                    //             ...a,
+                    //             amount: a.amount - 1
+                    //         }
+                    //     }
+                    //     return a
+                    // })
                 }
             }
         }
@@ -113,8 +113,91 @@ export const generateDailyPurchases = (
 ): GameType => {
     let newGame = game
 
+    const toDisableIds: number[] = []
+
     for (const purchase of game.dailyPurchases.sort((a, b) => a.id - b.id)) {
-        if (!purchase.disabledAt) {
+        const rightDay = ((game.day - 1) % purchase.frequency) === 0.5
+
+        if (!purchase.disabledAt && rightDay) {
+            console.log(purchase)
+            let doInStuff = true
+
+            //? out stuff
+            if (purchase.out.type === "money") {
+                if (newGame.farm.money >= purchase.out.amount) {
+                    newGame = {
+                        ...newGame,
+                        farm: {
+                            ...newGame.farm,
+                            money: ((newGame.farm.money * 100) - (purchase.out.amount * 100)) / 100
+                        }
+                    }
+                } else {
+                    doInStuff = false
+                }
+            } else {
+                console.log("out type ==> ", purchase.out)
+                if (purchase.out.type === "resource") {
+                    const resource = newGame.farm.resources.find(
+                        (r) => r.name === purchase.out.specificType
+                    ) || { amount: 0 }
+
+                    if (resource?.amount >= purchase.out.amount) {
+                        console.log("amount is enough!")
+                        newGame = {
+                            ...newGame,
+                            farm: {
+                                ...newGame.farm,
+                                resources: newGame.farm.resources.map((r) => {
+                                    if (r.name === purchase.out.specificType) {
+                                        return {
+                                            ...r,
+                                            amount: r.amount - purchase.out.amount
+                                        }
+                                    }
+                                    return r
+                                })
+                            }
+                        }
+                    } else {
+                        doInStuff = false
+                    }
+                }
+
+                // if (purchase.out.type === "animal") {
+                //     const animal = newGame.farm.animals.find(
+                //         (a) => a.name === purchase.out.specificType
+                //     ) || { amount: 0 }
+
+                //     if (animal.amount >= purchase.out.amount) {
+                //         newGame = {
+                //             ...newGame,
+                //             farm: {
+                //                 ...newGame.farm,
+                //                 animals: newGame.farm.animals.map((a) => {
+                //                     if (a.name === purchase.out.specificType) {
+                //                         return {
+                //                             ...a,
+                //                             amount: a.amount - purchase.out.amount
+                //                         }
+                //                     }
+                //                     return a
+                //                 })
+                //             }
+                //         }   
+                //     }
+                //     else {
+                //         doInStuff = false
+                //     }
+                // }
+            }
+
+            if (!doInStuff) {
+                console.log("cannot do instuff :(")
+                toDisableIds.push(purchase.id)
+                break
+            }
+
             //? in stuff
             if (purchase.in.type === "money") {
                 newGame = {
@@ -129,15 +212,15 @@ export const generateDailyPurchases = (
                     ...newGame,
                     farm: {
                         ...newGame.farm,
-                        animals: newGame.farm.animals.map((a) => {
-                            if (a.name === purchase.in.specificType) {
-                                return {
-                                    ...a,
-                                    amount: a.amount + purchase.in.amount
-                                }
-                            }
-                            return a
-                        }),
+                        // animals: newGame.farm.animals.map((a: AnimalType) => {
+                        //     if (a.name === purchase.in.specificType) {
+                        //         return {
+                        //             ...a,
+                        //             amount: a.amount + purchase.in.amount
+                        //         }
+                        //     }
+                        //     return a
+                        // }),
                         resources: newGame.farm.resources.map((r) => {
                             if (r.name === purchase.in.specificType) {
                                 return {
@@ -150,9 +233,21 @@ export const generateDailyPurchases = (
                     }
                 }
             }
-
-            //? out stuff
         }
+    }
+    console.log("to diasable ==> ", toDisableIds)
+    newGame = {
+        ...newGame,
+        dailyPurchases: newGame.dailyPurchases.map((p) => {
+            if (toDisableIds.includes(p.id)) {
+                return {
+                    ...p,
+                    disabledAt: newGame.day
+                }
+            }
+
+            return p
+        })
     }
 
     return newGame

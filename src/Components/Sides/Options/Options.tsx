@@ -7,8 +7,10 @@ import './options.css'
 import { TabProp, Tabs } from '../../Tabs'
 import { DailyPurchases } from './Purchases/Purchases/DailyPurchases'
 import { DailyPurchase } from '../../../classes/Farm'
+import { Helper } from './Purchases/Helpers'
+import { TableTest } from '../../Tools/Table'
 
-export const Options = (props: {
+export const    Options = (props: {
     game: GameType
     setDailyPurchases: (p: DailyPurchase[]) => void
     handleBuyAnimal: (
@@ -49,27 +51,30 @@ export const Options = (props: {
         {
             label: "Daily Purchases",
             content: (
-                <div className="">
-                    <DailyPurchases
-                        currentDay={game.day}
-                        dailyPurchases={game.dailyPurchases}
-                        setDailyPurchases={setDailyPurchases}
-                    />
-                </div>
+                <DailyPurchases
+                    currentDay={game.day}
+                    dailyPurchases={game.dailyPurchases}
+                    setDailyPurchases={setDailyPurchases}
+                />
             )
+        },
+        {
+            label: "Helpers",
+            content: <Helper game={game} />
         }
     ]
     
     return (
         <>
-            <div className="optionsHeader">
+            <TableTest />
+            {/* <div className="optionsHeader">
                 Purchase Options
             </div>
             <Tabs tabs={tabs} />
 
             <div className="manyTrades">
                 <ViewManyTrades game={game} trades={game.trades} />
-            </div>
+            </div> */}
             
             {/* // selling animals should sell for 75% of their buying price */}
             {/* <SellAnimals showSellAnimals setShowSellAnimals={() => {}} handleSellAnimals={() => {}} /> */}

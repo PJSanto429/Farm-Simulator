@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useId, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GameCreateType, GameType, generateDailyResources, getGameFromString, getGameToSave } from '../classes/Game'
+import { GameCreateType, GameType, generateDailyPurchases, generateDailyResources, getGameFromString, getGameToSave } from '../classes/Game'
 import { GameOptions } from './GameOptions'
 import { Header } from './Header'
 
@@ -41,14 +41,19 @@ export const MainGame = () => {
             return <>loading...</>
         }
         const handleChangeDay = () => {
-            setGame({
+            let newGame = {
                 ...game,
                 day: game.day + .5
-            })
-            if (game.day % 1 === 0) {
-                console.log("it is a new day")
             }
-            handleSaveGame(game)
+            if (game.day % 1 === 0) {
+                // newGame = generateDailyPurchases(
+                //     generateDailyResources(
+                //         newGame
+                //     )
+                // )
+            }
+            setGame(newGame)
+            handleSaveGame(newGame)
         }
         return (
             <Header
@@ -63,55 +68,115 @@ export const MainGame = () => {
             return
         }
         
-        console.log(game)
+        // console.log(generateDailyPurchases({
+        //     ...game,
+        //     dailyPurchases: game.dailyPurchases.filter((p) => p.out.type !== "money")
+        // }))
+        // console.log(generateDailyPurchases(game))
+        
+        const toDo: number = 1
+        if (toDo === 1) {
+            const newGame = generateDailyPurchases(
+                generateDailyResources(
+                    game
+                )
+            )
+            handleSaveGame(newGame)
+            setGame(newGame)
+        } else {
+            handleSaveGame({
+                ...game,
+                farm: {
+                    ...game.farm,
+                    money: 0.15
+                    // resources: game.farm.resources.map((r) => {
+                    //     if (r.name === "Egg") {
+                    //         return {
+                    //             ...r,
+                    //             amount: 200
+                    //         }
+                    //     }
+                    //     return r
+                    // })
+                }
+            })
+        }
+
         // handleSaveGame({
         //     ...game,
-        //     dailyPurchases: [{
-        //         id: 1,
-        //         updateDaily: true,
-        //         in: {
-        //             type: "money",
-        //             specificType: "none",
-        //             amount: 9
+        //     farm: {
+        //         ...game.farm,
+        //         money: 2000
+        //     }
+        // })
+        // handleSaveGame({
+        //     ...game,
+        //     dailyPurchases: [
+        //         {
+        //             id: 1,
+        //             updateDaily: false,
+        //             in: {
+        //                 type: "resource",
+        //                 specificType: "Seed",
+        //                 amount: 210
+        //             },
+        //             out: {
+        //                 type: "money",
+        //                 specificType: "none",
+        //                 amount: 2.10
+        //             },
+        //             startDay: 0,
+        //             frequency: 1
         //         },
-        //         out: {
-        //             type: "resource",
-        //             specificType: "seeds",
-        //             amount: 900
+        //         {
+        //             id: 2,
+        //             updateDaily: false,
+        //             in: {
+        //                 type: "money",
+        //                 specificType: "none",
+        //                 amount: 10
+        //             },
+        //             out: {
+        //                 type: "resource",
+        //                 specificType: "Egg",
+        //                 amount: 20
+        //             },
+        //             startDay: 1,
+        //             frequency: 1
         //         },
-        //         startDay: 0,
-        //         frequency: 90
-        //     }, {
-        //         id: 2,
-        //         updateDaily: false,
-        //         in: {
-        //             type: "money",
-        //             specificType: "none",
-        //             amount: 15
+        //         {
+        //             id: 3,
+        //             updateDaily: false,
+        //             in: {
+        //                 type: "resource",
+        //                 specificType: "Wheat",
+        //                 amount: 75
+        //             },
+        //             out: {
+        //                 type: "money",
+        //                 specificType: "none",
+        //                 amount: 1.15 * 75
+        //             },
+        //             startDay: 1,
+        //             frequency: 1
         //         },
-        //         out: {
-        //             type: "resource",
-        //             specificType: "eggs",
-        //             amount: 30
+        //         {
+        //             id: 4,
+        //             updateDaily: false,
+        //             in: {
+        //                 type: "money",
+        //                 specificType: "none",
+        //                 amount: 21
+        //             },
+        //             out: {
+        //                 type: "resource",
+        //                 specificType: "Milk",
+        //                 amount: 21
+        //             },
+        //             startDay: 1,
+        //             frequency: 1
         //         },
-        //         startDay: 1,
-        //         frequency: 2
-        //     }, {
-        //         id: 3,
-        //         updateDaily: false,
-        //         in: {
-        //             type: "animal",
-        //             specificType: "cow",
-        //             amount: 2
-        //         },
-        //         out: {
-        //             type: "money",
-        //             specificType: "none",
-        //             amount: 1000
-        //         },
-        //         startDay: 1,
-        //         frequency: 15
-        //     }]
+        //     ]
         // })
     }
 
@@ -136,7 +201,7 @@ export const MainGame = () => {
                     game={game}
                     setGame={setGame}
                     handleSaveGame={handleSaveGame}
-                /> <br />
+                />
             </div>
         </>
     )
