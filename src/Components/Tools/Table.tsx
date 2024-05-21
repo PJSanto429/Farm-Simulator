@@ -26,7 +26,7 @@ export const Table = <T extends object>({
     return (
         <div className={`tableMain ${!!align ? align : "center"}`}>
             <table {...getTableProps()}>
-                <thead className="tableHeader">
+                <thead>
                     {headerGroups.map((headerGroup) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column) => (
@@ -126,7 +126,7 @@ export const TableTest = () => {
 
     return (
         <div>
-            <h1>Table Example</h1>
+            <h4>Table Example</h4>
             <Table columns={columns} data={data} />
         </div>
     )

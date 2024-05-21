@@ -66,15 +66,15 @@ export const    Options = (props: {
     
     return (
         <>
-            <TableTest />
-            {/* <div className="optionsHeader">
+            {/* <TableTest /> */}
+            <div className="optionsHeader">
                 Purchase Options
             </div>
             <Tabs tabs={tabs} />
 
             <div className="manyTrades">
                 <ViewManyTrades game={game} trades={game.trades} />
-            </div> */}
+            </div>
             
             {/* // selling animals should sell for 75% of their buying price */}
             {/* <SellAnimals showSellAnimals setShowSellAnimals={() => {}} handleSellAnimals={() => {}} /> */}

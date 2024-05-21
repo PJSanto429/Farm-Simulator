@@ -1,5 +1,9 @@
+import { Column } from "react-table"
 import { GameType } from "../../../../classes/Game"
 import './index.css'
+import { AnimalType } from "../../../../classes/Animals/Animal"
+import { Table } from "../../../Tools/Table"
+import { ResourceType } from "../../../../classes/Resources/Resource"
 
 export const Helper = (props: {
     game: GameType
@@ -8,35 +12,66 @@ export const Helper = (props: {
         game
     } = props
 
+    const animalColumns: Column<AnimalType>[] = [
+        {
+            Header: "Name",
+            accessor: "name",
+            Cell: ({ row }) => (
+                <>{row.original.name}</>
+            )
+        },
+        {
+            Header: "Price",
+            accessor: "price",
+            Cell: ({ row }) => (
+                <>${row.original.price}</>
+            )
+        },
+        {
+            Header: "Food",
+            accessor: 'food',
+            Cell: ({ row }) => (
+                <>{row.original.foodPerDay} {row.original.food}</>
+            )
+        },
+        {
+            Header: "Output",
+            accessor: "output",
+            Cell: ({ row }) => (
+                <>{row.original.outputPerDay} {row.original.output}</>
+            )
+        }
+    ]
+
+    const resourceColumns: Column<ResourceType>[] = [
+        {
+            Header: "Name",
+            accessor: "name",
+            Cell: ({ row }) => (
+                <>{row.original.name}</>
+            )
+        },
+        {
+            Header: "Price",
+            accessor: "price",
+            Cell: ({ row }) => (
+                <>${row.original.price}</>
+            )
+        },
+    ]
+
     return (
         <>
             <span className="infoText">
                 Price for each individual resource/animal
             </span>
             <div className="helperMain">
-                <div className="helperSection">
-                    <h4>Resources</h4>
-                    <div className="helperItem">
-                        {game.farm.resources.map((r) => (
-                            <span className="oneHelperItem">
-                                {r.name} - ${r.price}
-                                <br />
-                            </span>
-                            // <table></table>
-                        ))}
-                    </div>
-                </div>
 
-                <div className="helperSection">
-                    <h4>Animals</h4>
-                    <div className="helperItem">
-                        {game.farm.animals.map((a) => (
-                            <span className="oneHelperItem">
-                                {a.name} - ${a.price}
-                                <br />
-                            </span>
-                        ))}
-                    </div>
+                <div className="oneTable">
+                    <Table columns={animalColumns} data={game.farm.animals} />
+                </div>
+                <div className="oneTable">
+                    <Table columns={resourceColumns} data={game.farm.resources} />
                 </div>
             </div>
         </>

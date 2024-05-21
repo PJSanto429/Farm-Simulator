@@ -120,23 +120,6 @@
         margin: unset;
     }
 }
-
-.helperSection {
-    /* outline: 2px solid blue; */
+.oneTable {
     width: 50%;
 }
-
-.helperItem {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 10px 0px;
-    align-content: flex-start;
-    padding-left: 10px;
-}
-
-/* .oneHelperItem {
-    div {
-        all: unset;
-    }
-} */
