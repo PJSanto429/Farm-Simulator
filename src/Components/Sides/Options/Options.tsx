@@ -1,18 +1,17 @@
 import { useState } from 'react'
-import { GameType } from '../../../classes/Game'
+// import { GameType } from '../../../classes/Game'
 import { BuyAnimals } from './Purchases/BuyAnimals'
 import { BuyResources } from './Purchases/BuyResources'
 import { ViewManyTrades } from './ViewManyTrades'
 import './options.css'
 import { TabProp, Tabs } from '../../Tabs'
 import { DailyPurchases } from './Purchases/Purchases/DailyPurchases'
-import { DailyPurchase } from '../../../classes/Farm'
+// import { DailyPurchase } from '../../../classes/Farm'
 import { Helper } from './Purchases/Helpers'
-import { TableTest } from '../../Tools/Table'
 
 export const    Options = (props: {
-    game: GameType
-    setDailyPurchases: (p: DailyPurchase[]) => void
+    game: FarmSim.GameType
+    setDailyPurchases: (p: FarmSim.DailyPurchase[]) => void
     handleBuyAnimal: (
         animal: string,
         amount: number

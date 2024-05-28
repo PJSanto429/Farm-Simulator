@@ -1,36 +1,45 @@
 import { Formik } from "formik"
-import { CreateDailyPurchaseType } from "../../../../../classes/Farm"
+// import { CreateDailyPurchaseType } from "../../../../../classes/Farm"
 
 export const CreateDailyPurchase = (props: {
-    purchaseToAdd: CreateDailyPurchaseType
+    purchaseToAdd: FarmSim.CreateDailyPurchaseType
+    onCancel: () => void
+    onPurchaseAdded: (p: FarmSim.CreateDailyPurchaseType) => void
 }) => {
     const {
-        purchaseToAdd
+        purchaseToAdd,
+        onCancel,
+        onPurchaseAdded
     } = props
 
     const handleSubmit = (
-        values: CreateDailyPurchaseType
+        values: FarmSim.CreateDailyPurchaseType
     ) => {
         console.log("values ==> ", values)
+        onPurchaseAdded(values)
     }
 
     const buttonDisabled = (
-        values: CreateDailyPurchaseType
+        values: FarmSim.CreateDailyPurchaseType
     ): boolean => {
         const {
             in: inValues,
             out
         } = values
 
+        if (inValues.amount === 0 || out.amount === 0) {
+            return true
+        }
+
         if (inValues.type !== "money") {
-            return inValues.specificType !== ""
+            return inValues.specificType === ""
         }
 
         if (out.type !== "money") {
-            return out.specificType !== ""
+            return out.specificType === ""
         }
 
-        return true
+        return false
     }
 
     return (
@@ -55,6 +64,42 @@ export const CreateDailyPurchase = (props: {
                                 </p>
 
                                 <div className="purchaseCreateResources">
+                                    <div className="inOutResource">
+                                        <p className="purchaseResourceHelper">Out:</p>
+                                        <div className="purchaseSection">
+                                            Amount: <input
+                                                type="number"
+                                                className="number"
+                                                name="out.amount"
+                                                value={form.values.out.amount}
+                                                onChange={form.handleChange}
+                                            />
+                                        </div>
+                                        <br />
+                                        <div className="purchaseSection">
+                                            Type:
+                                            <select
+                                                name="out.specificType"
+                                                onChange={(e) => {
+                                                    const { value } = e.target
+                                                    if (value === "money") {
+                                                        form.setFieldValue("out.type", "money")
+                                                        form.setFieldValue("out.specificType", "")
+                                                    } else {
+                                                        form.setFieldValue("out.type", "resource")
+                                                        form.setFieldValue("out.specificType", value)
+                                                    }
+                                                }}
+                                            >
+                                                <option value="">Select...</option>
+                                                <option value="money">Money</option>
+                                                <option value="seed">Seeds</option>
+                                                <option value="eggs">Eggs</option>
+                                                <option value="wheat">Wheat</option>
+                                                <option value="milk">Milk</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div className="inOutResource">
                                         <p className="purchaseResourceHelper">In:</p>
                                         <div className="purchaseSection">
@@ -92,47 +137,13 @@ export const CreateDailyPurchase = (props: {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="inOutResource">
-                                        <p className="purchaseResourceHelper">Out:</p>
-                                        <div className="purchaseSection">
-                                            Amount: <input
-                                                type="number"
-                                                className="number"
-                                                name="out.amount"
-                                                value={form.values.out.amount}
-                                                onChange={form.handleChange}
-                                            />
-                                        </div>
-                                        <br />
-                                        <div className="purchaseSection">
-                                            Type:
-                                            <select
-                                                name="out.specificType"
-                                                onChange={(e) => {
-                                                    const { value } = e.target
-                                                    if (value === "money") {
-                                                        form.setFieldValue("out.type", "money")
-                                                        form.setFieldValue("out.specificType", "")
-                                                    } else {
-                                                        form.setFieldValue("out.type", "resource")
-                                                        form.setFieldValue("out.specificType", value)
-                                                    }
-                                                }}
-                                            >
-                                                <option value="">Select...</option>
-                                                <option value="money">Money</option>
-                                                <option value="seed">Seeds</option>
-                                                <option value="eggs">Eggs</option>
-                                                <option value="wheat">Wheat</option>
-                                                <option value="milk">Milk</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div className="createPurchaseButtons">
                                     <button
                                         className="secondary"
+                                        type="button"
+                                        onClick={onCancel}
                                     >
                                         Cancel
                                     </button>

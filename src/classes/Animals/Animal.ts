@@ -1,21 +1,7 @@
 
-export interface AnimalType {
-    weight: number
-    price: number
-    lifespan: number
-    name: String
-    requiredSpace: number
+export const AnimalMoods: FarmSim.AnimalMoodType[] = ["happy", "sad", "hungry", "thirsty", "playful", "sick", "stressed"]
 
-    food: string
-    foodPerDay: number
-
-    output: string
-    outputPerDay: number
-
-    amount: number
-}
-
-export const Chicken: AnimalType = {
+export const Chicken: FarmSim.AnimalType = {
     name: "Chicken",
     weight: 6,
     price: 5,
@@ -28,7 +14,7 @@ export const Chicken: AnimalType = {
     amount: 0
 }
 
-export const Cow: AnimalType = {
+export const Cow: FarmSim.AnimalType = {
     name: "Cow",
     weight: 1100,
     price: 500,

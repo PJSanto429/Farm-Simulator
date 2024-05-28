@@ -1,12 +1,11 @@
-import { AnimalType, Chicken, Cow } from './Animals/Animal'
-import { DailyPurchase, FarmType, OtherFarmType, TradeType } from './Farm'
-import { Egg, Milk, ResourceType, Seed, Wheat } from './Resources/Resource'
+
+export const FarmPersonalities: FarmSim.FarmPersonality[] = ["friendly", "hostile", "stupid", "liar", "thief"]
 
 export class GameHelper {
     getAnimalByName(
         nameToFind: String,
-        animals: AnimalType[]
-    ): AnimalType | null {
+        animals: FarmSim.AnimalType[]
+    ): FarmSim.AnimalType | null {
         for (var animal of animals) {
             if (animal.name === nameToFind) {
                 return animal
@@ -17,8 +16,8 @@ export class GameHelper {
 
     getResourceByName(
         nameToFind: string,
-        resources: ResourceType[]
-    ): ResourceType | null {
+        resources: FarmSim.ResourceType[]
+    ): FarmSim.ResourceType | null {
         for (var resource of resources) {
             if (resource.name === nameToFind) {
                 return resource
@@ -28,7 +27,7 @@ export class GameHelper {
     }
 }
 
-export const getGameToSave = (game: GameType): GameCreateType => {
+export const getGameToSave = (game: FarmSim.GameType): FarmSim.GameCreateType => {
     return {
         id: game.farm.id,
         farmName: game.farm.farmName,
@@ -50,8 +49,8 @@ export const getGameToSave = (game: GameType): GameCreateType => {
 }
 
 export const generateDailyResources = (
-    game: GameType
-): GameType => {
+    game: FarmSim.GameType
+): FarmSim.GameType => {
     let newGame = game
 
     for (const animal of game.farm.animals) {
@@ -109,8 +108,8 @@ export const generateDailyResources = (
 }
 
 export const generateDailyPurchases = (
-    game: GameType
-): GameType => {
+    game: FarmSim.GameType
+): FarmSim.GameType => {
     let newGame = game
 
     const toDisableIds: number[] = []
@@ -254,40 +253,40 @@ export const generateDailyPurchases = (
 }
 
 export const getGameFromString = (
-    gameString: GameCreateType
-): GameType => {
-    const toReturn: GameType = {
+    gameString: FarmSim.GameCreateType
+): FarmSim.GameType => {
+    const toReturn: FarmSim.GameType = {
         farm: {
             id: gameString.id,
             farmName: gameString.farmName,
             playerName: gameString.playerName,
             resources: [
-                {
-                    ...Seed,
-                    amount: gameString.seedAmt
-                },
-                {
-                    ...Egg,
-                    amount: gameString.eggAmt
-                },
-                {
-                    ...Wheat,
-                    amount: gameString.wheatAmt
-                },
-                {
-                    ...Milk,
-                    amount: gameString.milkAmt
-                },
+            //     {
+            //         ...FarmSim.Seed,
+            //         amount: gameString.seedAmt
+            //     },
+            //     {
+            //         ...FarmSim.Egg,
+            //         amount: gameString.eggAmt
+            //     },
+            //     {
+            //         ...FarmSim.Wheat,
+            //         amount: gameString.wheatAmt
+            //     },
+            //     {
+            //         ...FarmSim.Milk,
+            //         amount: gameString.milkAmt
+            //     },
             ],
             animals: [
-                {
-                    ...Chicken,
-                    amount: gameString.chickenAmt
-                },
-                {
-                    ...Cow,
-                    amount: gameString.cowAmt
-                }
+                // {
+                //     ...FarmSim.Chicken,
+                //     amount: gameString.chickenAmt
+                // },
+                // {
+                //     ...FarmSim.Cow,
+                //     amount: gameString.cowAmt
+                // }
             ],
             money: gameString.money
         },
@@ -302,53 +301,64 @@ export const getGameFromString = (
     return toReturn
 }
 
-export interface GameType {
-    farm: FarmType
+// export interface GameType {
+//     farm: FarmType
 
-    status: StatusType[]
-    otherFarms: OtherFarmType[]
-    moveNumber: number
-    day: number
-    trades: TradeType[]
-    dailyPurchases: DailyPurchase[]
-}
+//     status: StatusType[]
+//     otherFarms: OtherFarmType[]
+//     moveNumber: number
+//     day: number
+//     trades: TradeType[]
+//     dailyPurchases: DailyPurchase[]
+// }
 
-export interface GameCreateType {
-    id: number
-    farmName: string
-    playerName: string
-    money: number
-    status: StatusType[]
-    otherFarms: OtherFarmType[]
-    trades: TradeType[]
-    dailyPurchases: DailyPurchase[]
+// export interface GameTypeNew {
+//     farm: FarmType
 
-    moveNumber: number
-    day: number
+//     otherFarms: OtherFarmType[]
+//     moveNumber: number
+//     day: number
+//     trades: TradeType[]
+
+//     animals: {}
+// }
+
+// export interface GameCreateType {
+//     id: number
+//     farmName: string
+//     playerName: string
+//     money: number
+//     status: StatusType[]
+//     otherFarms: OtherFarmType[]
+//     trades: TradeType[]
+//     dailyPurchases: DailyPurchase[]
+
+//     moveNumber: number
+//     day: number
     
-    seedAmt: number
-    wheatAmt: number
-    eggAmt: number
-    milkAmt: number
+//     seedAmt: number
+//     wheatAmt: number
+//     eggAmt: number
+//     milkAmt: number
 
-    chickenAmt: number
-    cowAmt: number
-}
+//     chickenAmt: number
+//     cowAmt: number
+// }
 
-type StatusTypeType = "warning" | "success" | "unknown" | "event"
-type StatusTimePeriodType = "AM" | "PM"
+// type StatusTypeType = "warning" | "success" | "unknown" | "event"
+// type StatusTimePeriodType = "AM" | "PM"
 
-export interface StatusTimeType {
-    hour: number
-    minute: number
-    timePeriod: StatusTimePeriodType
-}
+// export interface StatusTimeType {
+//     hour: number
+//     minute: number
+//     timePeriod: StatusTimePeriodType
+// }
 
-export interface StatusType {
-    message: string
-    type: StatusTypeType
-    createdAt: {
-        day: number
-        time: StatusTimeType
-    }
-}
+// export interface StatusType {
+//     message: string
+//     type: StatusTypeType
+//     createdAt: {
+//         day: number
+//         time: StatusTimeType
+//     }
+// }

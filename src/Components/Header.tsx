@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { GameType } from '../classes/Game'
 import { Time } from './Time'
 
 export const Header = (props: {
-    currentGame: GameType
+    currentGame: FarmSim.GameType
     handleChangeDay: () => void
 
 }) => {

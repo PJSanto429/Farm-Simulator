@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { CreateTradeType, OtherFarmType } from "../../../classes/Farm"
+// import { CreateTradeType, OtherFarmType } from "../../../classes/Farm"
 import { FarmTrade } from "./Trade"
 
 export const ViewOneFarm = (props: {
-    farm: OtherFarmType
+    farm: FarmSim.OtherFarmType
     setFarmToView: () => void
     defaultTrade: boolean
-    onTradeSent: (trade: CreateTradeType) => void
+    onTradeSent: (trade: FarmSim.CreateTradeType) => void
 }) => {
     const {
         farm,

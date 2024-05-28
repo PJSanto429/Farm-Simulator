@@ -1,8 +1,8 @@
 import { Formik } from "formik"
-import { CreateTradeType } from "../../../classes/Farm"
+// import { CreateTradeType } from "../../../classes/Farm"
 
 export const FarmTrade = (props: {
-    handleSubmit: (e: CreateTradeType) => void
+    handleSubmit: (e: FarmSim.CreateTradeType) => void
     setShowTrade: (e: boolean) => void
     farmId: number
 }) => {
@@ -24,7 +24,7 @@ export const FarmTrade = (props: {
         otherFarmId: farmId
     }
 
-    const disabled = (e: CreateTradeType): boolean => {
+    const disabled = (e: FarmSim.CreateTradeType): boolean => {
         if (e.typeIn === "money" && e.typeOut === "money") {
             return false
         }
@@ -38,7 +38,7 @@ export const FarmTrade = (props: {
     }
 
     const ProposedTrade = (props: {
-        trade: CreateTradeType
+        trade: FarmSim.CreateTradeType
     }) => {
         const { trade } = props
 

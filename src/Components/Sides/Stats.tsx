@@ -1,13 +1,13 @@
-import { CreateTradeType, TradeType, specificTradeType, tradeType } from '../../classes/Farm'
-import { GameType } from '../../classes/Game'
+// import { CreateTradeType, TradeType, specificTradeType, tradeType } from '../../classes/Farm'
+// import { GameType } from '../../classes/Game'
 import { TabProp, Tabs } from '../Tabs'
 import { ManyFarms } from './OtherFarms/ManyFarms'
 import './index.css'
 
 export const Stats = (props: {
-    game: GameType
-    setGame: (game: GameType) => void
-    handleSaveGame: (altGame: GameType | undefined) => void
+    game: FarmSim.GameType
+    setGame: (game: FarmSim.GameType) => void
+    handleSaveGame: (altGame: FarmSim.GameType | undefined) => void
 }) => {
     const {
         game,
@@ -23,7 +23,7 @@ export const Stats = (props: {
     const eggAmt = game.farm.resources.find((r) => r.name === "Egg")?.amount || 0
     const milkAmt = game.farm.resources.find((r) => r.name === "Milk")?.amount || 0
 
-    const onTradeSent = (e: CreateTradeType) => {
+    const onTradeSent = (e: FarmSim.CreateTradeType) => {
         let newTradeId = 1
         for (const trade of game.trades) {
             if (trade.id >= newTradeId) {
@@ -31,7 +31,7 @@ export const Stats = (props: {
             }
         }
 
-        const toAdd: TradeType = {
+        const toAdd: FarmSim.TradeType = {
             fromFarm: game.farm.id,
             toFarm: e.otherFarmId,
             status: "pending",
@@ -39,13 +39,13 @@ export const Stats = (props: {
             id: newTradeId,
             
             in: {
-                type: e.typeIn as tradeType,
-                specificType: e.specificTypeIn as specificTradeType,
+                type: e.typeIn as FarmSim.tradeType,
+                specificType: e.specificTypeIn as FarmSim.specificTradeType,
                 amount: e.amountIn
             },
             out: {
-                type: e.typeOut as tradeType,
-                specificType: e.specificTypeOut as specificTradeType,
+                type: e.typeOut as FarmSim.tradeType,
+                specificType: e.specificTypeOut as FarmSim.specificTradeType,
                 amount: e.amountOut
             }
         }

@@ -1,8 +1,8 @@
 import { Formik } from "formik"
-import { DailyPurchase, TradeDetails } from "../../../../../classes/Farm"
+// import { DailyPurchase, TradeDetails } from "../../../../../classes/Farm"
 
 const PurchaseDetails = (props: {
-    data: TradeDetails
+    data: FarmSim.TradeDetails
 }) => {
     const {
         type,
@@ -25,8 +25,8 @@ const PurchaseDetails = (props: {
 }
 
 export const EditOnePurchase = (props: {
-    purchase: DailyPurchase
-    handleSave: (newPurchase: DailyPurchase) => void
+    purchase: FarmSim.DailyPurchase
+    handleSave: (newPurchase: FarmSim.DailyPurchase) => void
     handleCancel: () => void
 }) => {
     const {
@@ -92,12 +92,12 @@ export const EditOnePurchase = (props: {
 }
 
 export const ViewOnePurchase = (props: {
-    purchase: DailyPurchase
+    purchase: FarmSim.DailyPurchase
     togglePurchase: (
-        purchase: DailyPurchase,
+        purchase: FarmSim.DailyPurchase,
         action: "disable" | "enable" | "delete"
     ) => void
-    setPurchaseToEdit: (purchase: DailyPurchase) => void
+    setPurchaseToEdit: (purchase: FarmSim.DailyPurchase) => void
 }) => {
     const {
         purchase,
@@ -151,13 +151,13 @@ export const ViewOnePurchase = (props: {
 }
 
 export const OnePurchase = (props: {
-    purchase: DailyPurchase
+    purchase: FarmSim.DailyPurchase
     editing: boolean
     togglePurchase: (
-        purchase: DailyPurchase,
+        purchase: FarmSim.DailyPurchase,
         sction: "disable" | "enable" | "delete"
     ) => void
-    setPurchaseToEdit: (purchase: DailyPurchase | null) => void
+    setPurchaseToEdit: (purchase: FarmSim.DailyPurchase | null) => void
 }) => {
     const {
         purchase,

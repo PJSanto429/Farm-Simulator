@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { MainOptions } from './Components/MainOptions'
 import { NewGameOptions } from './Components/NewGameOptions'
-import { GameType, getGameToSave } from './classes/Game'
+import { getGameToSave } from './classes/Game'
 import { LoadGame } from './LoadGame'
 import './scrollbar.css'
 import './index.css'
@@ -21,7 +21,7 @@ export const App = () => {
         setShowNewGameOptions(true)
     }, [])
     
-    const onGameCreatedOrLoaded = (newGame: GameType) => {
+    const onGameCreatedOrLoaded = (newGame: FarmSim.GameType) => {
         setShowNewGameOptions(false)
         const gameToSave = getGameToSave(newGame)
         localStorage.setItem("game", JSON.stringify(gameToSave))

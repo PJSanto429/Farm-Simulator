@@ -2,6 +2,12 @@ body {
     background-color: black;
     color: rgb(15, 196, 15);
     font-size: 24px;
+
+    /* font-family: "Audiowide", sans-serif; */
+    /* font-family: "Micro 5 Charted", sans-serif; */
+    font-family: "Jaro", sans-serif;
+    /* font-family: "Creepster", system-ui; */
+    /* font-family: "Libre Barcode 39", system-ui;; */
 }
 
 div {

@@ -1,18 +1,18 @@
 import { Column } from "react-table"
-import { GameType } from "../../../../classes/Game"
+// import { GameType } from "../../../../classes/Game"
 import './index.css'
-import { AnimalType } from "../../../../classes/Animals/Animal"
+// import { AnimalType } from "../../../../classes/Animals/Animal"
 import { Table } from "../../../Tools/Table"
-import { ResourceType } from "../../../../classes/Resources/Resource"
+// import { ResourceType } from "../../../../classes/Resources/Resource"
 
 export const Helper = (props: {
-    game: GameType
+    game: FarmSim.GameType
 }) => {
     const {
         game
     } = props
 
-    const animalColumns: Column<AnimalType>[] = [
+    const animalColumns: Column<FarmSim.AnimalType>[] = [
         {
             Header: "Name",
             accessor: "name",
@@ -24,7 +24,7 @@ export const Helper = (props: {
             Header: "Price",
             accessor: "price",
             Cell: ({ row }) => (
-                <>${row.original.price}</>
+                <>🐔${row.original.price}</>
             )
         },
         {
@@ -43,7 +43,7 @@ export const Helper = (props: {
         }
     ]
 
-    const resourceColumns: Column<ResourceType>[] = [
+    const resourceColumns: Column<FarmSim.ResourceType>[] = [
         {
             Header: "Name",
             accessor: "name",

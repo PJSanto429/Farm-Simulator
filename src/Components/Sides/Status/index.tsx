@@ -1,8 +1,8 @@
-import { StatusType } from '../../../classes/Game'
+// import { StatusType } from '../../../classes/Game'
 import './index.css'
 
 export const Status = (props: {
-    status: StatusType[]
+    status: FarmSim.StatusType[]
 }) => {
     const {
         status

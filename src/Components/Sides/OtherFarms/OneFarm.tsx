@@ -1,7 +1,7 @@
-import { OtherFarmType } from "../../../classes/Farm"
+// import { OtherFarmType } from "../../../classes/Farm"
 
 export const OneFarm = (props: {
-    farm: OtherFarmType
+    farm: FarmSim.OtherFarmType
     onSetFarmToView: (openTrade: boolean) => void
 }) => {
     const {

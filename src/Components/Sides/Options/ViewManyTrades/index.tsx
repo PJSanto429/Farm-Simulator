@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react"
-import { FarmType, TradeType, specificTradeType, tradeType } from "../../../../classes/Farm"
-import { GameType } from "../../../../classes/Game"
+// import { FarmType, TradeType, specificTradeType, tradeType } from "../../../../classes/Farm"
+// import { GameType } from "../../../../classes/Game"
 import './index.css'
 
 export const ViewManyTrades = (props: {
-    game: GameType
-    trades: TradeType[]
+    game: FarmSim.GameType
+    trades: FarmSim.TradeType[]
 }) => {
     const {
         game,
@@ -16,8 +16,8 @@ export const ViewManyTrades = (props: {
 
     const DisplayItemTrade = (props: {
         data: {
-            type: tradeType
-            specificType: specificTradeType
+            type: FarmSim.tradeType
+            specificType: FarmSim.specificTradeType
             amount: number
         }
     }) => {
@@ -39,13 +39,13 @@ export const ViewManyTrades = (props: {
     }
 
     const OneTrade = (props: {
-        trade: TradeType
+        trade: FarmSim.TradeType
     }) => {
         const { trade } = props
 
         // to and from farms
-        const toFarm: FarmType = game.otherFarms.find((farm) => farm.id === trade.toFarm) || game.farm
-        const fromFarm: FarmType = game.otherFarms.find((farm) => farm.id === trade.fromFarm) || game.farm
+        const toFarm: FarmSim.FarmType = game.otherFarms.find((farm) => farm.id === trade.toFarm) || game.farm
+        const fromFarm: FarmSim.FarmType = game.otherFarms.find((farm) => farm.id === trade.fromFarm) || game.farm
         // const toMe: boolean = toFarm.id === game.farm.id
 
         return (

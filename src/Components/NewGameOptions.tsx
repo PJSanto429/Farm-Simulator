@@ -1,12 +1,11 @@
 import { useCallback, useState } from 'react'
-import { GameType, getGameFromString } from '../classes/Game'
-import { FarmPersonalities, OtherFarmType } from '../classes/Farm'
+import { FarmPersonalities, getGameFromString } from '../classes/Game'
 import { faker } from '@faker-js/faker'
 import { Chicken, Cow } from '../classes/Animals/Animal'
 import { Egg, Milk, Seed, Wheat } from '../classes/Resources/Resource'
 
 export const NewGameOptions = (props: {
-    onNewGameCreated: (createdGame: GameType) => void
+    onNewGameCreated: (createdGame: FarmSim.GameType) => void
 }) => {
     const {
         onNewGameCreated
@@ -15,8 +14,8 @@ export const NewGameOptions = (props: {
     const [farmName, setFarmName] = useState("")
     const [playerName, setPlayerName] = useState("")
 
-    const handleGetOtherFarms = (): OtherFarmType[] => {
-        const otherFarms: OtherFarmType[] = []
+    const handleGetOtherFarms = (): FarmSim.OtherFarmType[] => {
+        const otherFarms: FarmSim.OtherFarmType[] = []
         const randomNum = Math.random() * 3 + 5
         for (let i = 0; i < randomNum; i++) {
             otherFarms.push({

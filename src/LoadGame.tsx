@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { GameCreateType, GameType, getGameFromString } from "./classes/Game"
+import { getGameFromString } from "./classes/Game"
 
 export const LoadGame = (props: {
-    handleLoadGame: (game: GameType) => void
+    handleLoadGame: (game: FarmSim.GameType) => void
     onFail: () => void
 }) => {
     const {
@@ -12,13 +12,13 @@ export const LoadGame = (props: {
     } = props
 
     const [failed, setFailed] = useState(false)
-    const [loadedGame, setLoadedGame] = useState<GameType>()
+    const [loadedGame, setLoadedGame] = useState<FarmSim.GameType>()
     const navigate = useNavigate()
 
     useEffect(() => {
         const handleLoadGame = () => {
             try {
-                const gottenGame: GameCreateType = JSON.parse(localStorage.getItem("game") || "")
+                const gottenGame: FarmSim.GameCreateType = JSON.parse(localStorage.getItem("game") || "")
         
                 if (JSON.stringify(gottenGame) === "") {
                     setFailed(false)
@@ -47,8 +47,9 @@ export const LoadGame = (props: {
                 <>
                     Game found:
                     <div>
-                        <text>Farm Name: {loadedGame.farm.farmName}</text><br />
-                        <text>Player Name: {loadedGame.farm.playerName}</text>
+                        <span>Farm Name: {loadedGame.farm.farmName}</span>
+                        <br /><br />
+                        <span>Player Name: {loadedGame.farm.playerName}</span>
                     </div>
 
                     <button onClick={() => handleLoadGame(loadedGame)}>

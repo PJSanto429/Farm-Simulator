@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react"
-import { CreateTradeType, OtherFarmType } from "../../../classes/Farm"
+// import { CreateTradeType, OtherFarmType } from "../../../classes/Farm"
 import { OneFarm } from "./OneFarm"
 import "./index.css"
 import { ViewOneFarm } from "./ViewOneFarm"
 
 export const ManyFarms = (props: {
-    farms: OtherFarmType[]
-    onTradeSent: (e: CreateTradeType) => void
+    farms: FarmSim.OtherFarmType[]
+    onTradeSent: (e: FarmSim.CreateTradeType) => void
 }) => {
     const {
         farms,
         onTradeSent
     } = props
-    const [farmToView, setFarmToView] = useState<OtherFarmType | null>()
+    const [farmToView, setFarmToView] = useState<FarmSim.OtherFarmType | null>()
     const [defaultTrade, setDefaultTrade] = useState(false)
 
     return (

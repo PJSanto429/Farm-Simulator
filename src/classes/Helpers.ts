@@ -1,5 +1,7 @@
-import * as readline from 'readline'
-import { GameType, getGameFromString } from './Game'
+// import * as readline from 'readline'
+// import { GameType, getGameFromString } from './Game'
+
+export default {}
 
 // export const loadGame = async(): Promise<GameType | undefined> => {
 //     try {

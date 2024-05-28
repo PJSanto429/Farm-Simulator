@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react"
-import { CreateDailyPurchaseType, DailyPurchase } from "../../../../../classes/Farm"
+// import { CreateDailyPurchaseType, DailyPurchase } from "../../../../../classes/Farm"
 import '../index.css'
 import { OnePurchase } from "./OnePurchase"
 import { CreateDailyPurchase } from "./CreatePurchase"
 
 export const DailyPurchases = (props: {
     currentDay: number
-    dailyPurchases: DailyPurchase[]
-    setDailyPurchases: (d: DailyPurchase[]) => void
+    dailyPurchases: FarmSim.DailyPurchase[]
+    setDailyPurchases: (d: FarmSim.DailyPurchase[]) => void
 }) => {
     const {
         currentDay,
@@ -15,11 +15,11 @@ export const DailyPurchases = (props: {
         setDailyPurchases
     } = props
 
-    const [purchaseToEdit, setPurchaseToEdit] = useState<DailyPurchase | null>()
-    const [purchaseToAdd, setPurchaseToAdd] = useState<CreateDailyPurchaseType>()
+    const [purchaseToEdit, setPurchaseToEdit] = useState<FarmSim.DailyPurchase | null>()
+    const [purchaseToAdd, setPurchaseToAdd] = useState<FarmSim.CreateDailyPurchaseType | null>()
 
     const togglePurchase = (
-        purchase: DailyPurchase,
+        purchase: FarmSim.DailyPurchase,
         action: "disable" | "enable" | "delete"
     ) => {
         if (action === "delete" && !!purchase.disabledAt) {
@@ -71,6 +71,12 @@ export const DailyPurchases = (props: {
         })
     }, [currentDay, dailyPurchases])
 
+    const handlePurchaseAdded = useCallback((
+        values: FarmSim.CreateDailyPurchaseType
+    ) => {
+        // const newId = 
+    }, [dailyPurchases])
+
     return (
         <>
             {!dailyPurchases.length &&
@@ -87,7 +93,9 @@ export const DailyPurchases = (props: {
 
             {!!purchaseToAdd &&
                 <CreateDailyPurchase
+                    onCancel={() => setPurchaseToAdd(null)}
                     purchaseToAdd={purchaseToAdd}
+                    onPurchaseAdded={(p) => handlePurchaseAdded(p)}
                 />
             }
 

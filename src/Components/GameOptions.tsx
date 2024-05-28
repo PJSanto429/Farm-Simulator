@@ -1,12 +1,12 @@
-import { GameHelper, GameType } from '../classes/Game'
+import { GameHelper } from '../classes/Game'
 import { Stats } from './Sides/Stats'
 import { Options } from './Sides/Options/Options'
-import { DailyPurchase } from '../classes/Farm'
+// import { DailyPurchase } from '../classes/Farm'
 
 export const GameOptions = (props: {
-    game: GameType
-    setGame: (game: GameType) => void
-    handleSaveGame: (altGame: GameType | undefined) => void
+    game: FarmSim.GameType
+    setGame: (game: FarmSim.GameType) => void
+    handleSaveGame: (altGame: FarmSim.GameType | undefined) => void
 }) => {
     const {
         game,
@@ -33,7 +33,7 @@ export const GameOptions = (props: {
             return
         }
 
-        const gameToBe: GameType = {
+        const gameToBe: FarmSim.GameType = {
             ...game,
             farm: {
                 ...game.farm,
@@ -71,7 +71,7 @@ export const GameOptions = (props: {
             return
         }
 
-        const gameToBe: GameType = {
+        const gameToBe: FarmSim.GameType = {
             ...game,
             farm: {
                 ...game.farm,
@@ -92,7 +92,7 @@ export const GameOptions = (props: {
     }
 
     const handleSetDailyPurchases = (
-        dailyPurchases: DailyPurchase[]
+        dailyPurchases: FarmSim.DailyPurchase[]
     ) => {
         const newGame = { ...game, dailyPurchases}
         setGame(newGame)

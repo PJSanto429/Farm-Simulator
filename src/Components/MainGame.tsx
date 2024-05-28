@@ -1,22 +1,23 @@
-import { useCallback, useEffect, useId, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GameCreateType, GameType, generateDailyPurchases, generateDailyResources, getGameFromString, getGameToSave } from '../classes/Game'
+import { getGameFromString, getGameToSave } from '../classes/Game'
 import { GameOptions } from './GameOptions'
 import { Header } from './Header'
 
 export const MainGame = () => {
     const navigate = useNavigate()
 
-    const [game, setGame] = useState<GameType>()
+    const [game, setGame] = useState<FarmSim.GameType>()
 
     useEffect(() => {
         try {
-            const gottenGame: GameCreateType = JSON.parse(localStorage.getItem("game") || "")
+            const gottenGame: FarmSim.GameCreateType = JSON.parse(localStorage.getItem("game") || "")
     
             if (JSON.stringify(gottenGame) === "") {
                 navigate("/home")
             }
             const gameToSet = getGameFromString(gottenGame)
+            console.log(gameToSet)
             setGame(gameToSet)
         } catch (error) {
             navigate("/home")
@@ -24,7 +25,7 @@ export const MainGame = () => {
     }, [navigate])
 
     const handleSaveGame = useCallback((
-        altGame: GameType | undefined = undefined
+        altGame: FarmSim.GameType | undefined = undefined
     ) => {
         let toSave
 
@@ -67,117 +68,6 @@ export const MainGame = () => {
         if (game === undefined) {
             return
         }
-        
-        // console.log(generateDailyPurchases({
-        //     ...game,
-        //     dailyPurchases: game.dailyPurchases.filter((p) => p.out.type !== "money")
-        // }))
-        // console.log(generateDailyPurchases(game))
-        
-        const toDo: number = 1
-        if (toDo === 1) {
-            const newGame = generateDailyPurchases(
-                generateDailyResources(
-                    game
-                )
-            )
-            handleSaveGame(newGame)
-            setGame(newGame)
-        } else {
-            handleSaveGame({
-                ...game,
-                farm: {
-                    ...game.farm,
-                    money: 0.15
-                    // resources: game.farm.resources.map((r) => {
-                    //     if (r.name === "Egg") {
-                    //         return {
-                    //             ...r,
-                    //             amount: 200
-                    //         }
-                    //     }
-                    //     return r
-                    // })
-                }
-            })
-        }
-
-        // handleSaveGame({
-        //     ...game,
-        //     farm: {
-        //         ...game.farm,
-        //         money: 2000
-        //     }
-        // })
-        // handleSaveGame({
-        //     ...game,
-        //     dailyPurchases: [
-        //         {
-        //             id: 1,
-        //             updateDaily: false,
-        //             in: {
-        //                 type: "resource",
-        //                 specificType: "Seed",
-        //                 amount: 210
-        //             },
-        //             out: {
-        //                 type: "money",
-        //                 specificType: "none",
-        //                 amount: 2.10
-        //             },
-        //             startDay: 0,
-        //             frequency: 1
-        //         },
-        //         {
-        //             id: 2,
-        //             updateDaily: false,
-        //             in: {
-        //                 type: "money",
-        //                 specificType: "none",
-        //                 amount: 10
-        //             },
-        //             out: {
-        //                 type: "resource",
-        //                 specificType: "Egg",
-        //                 amount: 20
-        //             },
-        //             startDay: 1,
-        //             frequency: 1
-        //         },
-        //         {
-        //             id: 3,
-        //             updateDaily: false,
-        //             in: {
-        //                 type: "resource",
-        //                 specificType: "Wheat",
-        //                 amount: 75
-        //             },
-        //             out: {
-        //                 type: "money",
-        //                 specificType: "none",
-        //                 amount: 1.15 * 75
-        //             },
-        //             startDay: 1,
-        //             frequency: 1
-        //         },
-        //         {
-        //             id: 4,
-        //             updateDaily: false,
-        //             in: {
-        //                 type: "money",
-        //                 specificType: "none",
-        //                 amount: 21
-        //             },
-        //             out: {
-        //                 type: "resource",
-        //                 specificType: "Milk",
-        //                 amount: 21
-        //             },
-        //             startDay: 1,
-        //             frequency: 1
-        //         },
-        //     ]
-        // })
     }
 
     if (game === undefined) {
@@ -192,9 +82,9 @@ export const MainGame = () => {
                 </div>
 
                 {/* //! god button */}
-                <button onClick={handleGodButton}>
+                {/* <button onClick={handleGodButton}>
                     God Button!
-                </button>
+                </button> */}
 
                 <RenderHeader />
                 <GameOptions
