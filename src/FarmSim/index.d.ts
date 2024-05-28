@@ -4,48 +4,69 @@ declare global {
 
     namespace FarmSim {
 
+        // interface GameType {
+        //     farm: FarmType
+        
+        //     status: StatusType[]
+        //     otherFarms: OtherFarmType[]
+        //     moveNumber: number
+        //     day: number
+        //     trades: TradeType[]
+        //     dailyPurchases: DailyPurchase[]
+        // }
+        
         interface GameType {
-            farm: FarmType
-        
-            status: StatusType[]
-            otherFarms: OtherFarmType[]
-            moveNumber: number
-            day: number
-            trades: TradeType[]
-            dailyPurchases: DailyPurchase[]
-        }
-        
-        interface GameTypeNew {
             farm: FarmTypeNew
         
-            otherFarms: OtherFarmType[]
+            otherFarms: OtherFarmTypeNew[]
             day: number
-            trades: TradeType[]
-        
             resourcesData: Record<string, ResourceTypeNew>
             animalData: Record<string, AnimalTypeNew>
+            
+            trades: TradeType[]
+            status: StatusType[]
         }
         
-        interface GameCreateType {
-            id: number
-            farmName: string
-            playerName: string
-            money: number
-            status: StatusType[]
-            otherFarms: OtherFarmType[]
-            trades: TradeType[]
-            dailyPurchases: DailyPurchase[]
+        // interface GameCreateType {
+        //     id: number
+        //     farmName: string
+        //     playerName: string
+        //     money: number
+        //     status: StatusType[]
+        //     otherFarms: OtherFarmType[]
+        //     trades: TradeType[]
+        //     dailyPurchases: DailyPurchase[]
         
-            moveNumber: number
-            day: number
+        //     moveNumber: number
+        //     day: number
             
-            seedAmt: number
-            wheatAmt: number
-            eggAmt: number
-            milkAmt: number
+        //     seedAmt: number
+        //     wheatAmt: number
+        //     eggAmt: number
+        //     milkAmt: number
         
-            chickenAmt: number
-            cowAmt: number
+        //     chickenAmt: number
+        //     cowAmt: number
+        // }
+
+        interface GameCreateType {
+            farm: {
+                id: number
+                farmName: string
+                playerName: string
+                money: number
+                resources: Record<string, number>
+                animals: Record<string, OneAnimalType[]>
+                dailyPurchases: DailyPurchase[]
+            }
+            day: number
+            otherFarms: OtherFarmTypeNew[]
+            resourcesData: Record<string, ResourceTypeNew>
+            animalData: Record<string, AnimalTypeNew>
+
+            status: StatusType[]
+            trades: TradeType[]
+            
         }
 
         interface FarmType {
@@ -66,11 +87,18 @@ declare global {
         
             resources: Record<string, number>
             animals: Record<string, OneAnimalType[]>
+            dailyPurchases: DailyPurchase[]
         }
 
         type FarmPersonality = "friendly" | "hostile" | "stupid" | "liar" | "thief"
         
         interface OtherFarmType extends FarmType {
+            friendliness: number //* -50 to 50, starts at 0 (no attempts made), 'friending' sets to 5
+            personality: FarmPersonality
+            friendedAt?: StatusTimeType
+        }
+
+        interface OtherFarmTypeNew extends FarmTypeNew {
             friendliness: number //* -50 to 50, starts at 0 (no attempts made), 'friending' sets to 5
             personality: FarmPersonality
             friendedAt?: StatusTimeType
@@ -177,18 +205,9 @@ declare global {
 
         type AnimalMoodType = "happy" | "sad" | "hungry" | "thirsty" | "playful" | "sick" | "stressed"
 
-        interface NewAnimalType {           
-            weight: number
-            price: number
-            lifespan: number
-            name: String
-            requiredSpace: number
-
-            food: string
-            foodPerDay: number
-
-            output: string
-            outputPerDay: number
+        interface AnimalResourceType {
+            type: string
+            amtPerDay: number
         }
 
         interface AnimalTypeNew {
@@ -197,11 +216,8 @@ declare global {
             lifespan: number
             requiredSpace: number
 
-            food: string
-            foodPerDay: number
-
-            output: string
-            outputPerDay: number
+            food: AnimalResourceType
+            output: AnimalResourceType
         }
 
         interface OneAnimalType {

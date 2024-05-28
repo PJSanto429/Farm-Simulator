@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getGameFromString, getGameToSave } from '../classes/Game'
+import { getGameFromString } from '../classes/Game'
 import { GameOptions } from './GameOptions'
 import { Header } from './Header'
 
@@ -30,9 +30,9 @@ export const MainGame = () => {
         let toSave
 
         if (!!altGame) {
-            toSave = getGameToSave(altGame)
+            toSave = altGame // getGameToSave(altGame)
         } else if (game !== undefined) {
-            toSave = getGameToSave(game)
+            toSave = game // getGameToSave(game)
         }
         localStorage.setItem("game", JSON.stringify(toSave))
     }, [game])

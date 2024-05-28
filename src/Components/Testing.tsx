@@ -10,10 +10,14 @@ export const Testing = () => {
         price: 5,
         lifespan: 5,
         requiredSpace: 5,
-        food: "Seed",
-        foodPerDay: 10,
-        output: "Egg",
-        outputPerDay: 1
+        food: {
+            type: "Seed",
+            amtPerDay: 10,
+        },
+        output: {
+            type: "Egg",
+            amtPerDay: 1
+        }
     }
 
     const fakeChicken: FarmSim.AnimalTypeNew = {
@@ -21,10 +25,14 @@ export const Testing = () => {
         price: 500,
         lifespan: 15,
         requiredSpace: 30,
-        food: "Wheat",
-        foodPerDay: 25,
-        output: "Milk",
-        outputPerDay: 7
+        food: {
+            type: "Wheat",
+            amtPerDay: 25,
+        },
+        output: {
+            type: "Milk",
+            amtPerDay: 7
+        }
     }
 
     const testFarm: FarmSim.FarmTypeNew = {
@@ -43,14 +51,16 @@ export const Testing = () => {
         animals: {
             "chicken": [],
             "cow": []
-        }
+        },
+        dailyPurchases: []
     }
 
-    const [testGame, setTestGame] = useState<FarmSim.GameTypeNew>({
+    const [testGame, setTestGame] = useState<FarmSim.GameType>({
         farm: testFarm,
         otherFarms: [],
         day: 0,
         trades: [],
+        status: [],
         resourcesData: {
             "seed": {
                 weight: 0.1,
